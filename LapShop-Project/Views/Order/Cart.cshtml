@@ -1,0 +1,118 @@
+﻿@model ShoppingCard
+@{
+    ViewData["Title"] = "Cart";
+}
+<!-- breadcrumb start -->
+<div class="breadcrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="page-title">
+                    <h2>Cart</h2>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <nav aria-label="breadcrumb" class="theme-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/Home/Index">Home</a></li>
+                        <li class="breadcrumb-item active">Cart</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- breadcrumb End -->
+<!--section start-->
+<section class="cart-section section-b-space">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <table class="table cart-table table-responsive-xs">
+                    <thead>
+                        <tr class="table-head">
+                            <th scope="col">@ResPage.lblImage</th>
+                            <th scope="col">@ResPage.lblProductName</th>
+                            <th scope="col">@ResPage.lblPrice</th>
+                            <th scope="col">@ResPage.lblQuantity</th>
+                            <th scope="col">@ResPage.lblAction</th>
+                            <th scope="col">@ResPage.lblTotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ListItems)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="#"><img src="~/Uploads/Items/@item.ImageName" alt=""></a>
+                                </td>
+                                <td>
+                                    <a asp-controller="Items" asp-action="ItemsDetails"
+                                       asp-route-id="@item.ItemId">@item.ItemName</a>
+                                </td>
+                                <td>
+                                    <h2>$@item.Price</h2>
+                                </td>
+                                <td>
+                                    <div class="qty-box">
+                                        <div class="input-group">
+                                            <input type="number" name="quantity" class="form-control input-number"
+                                                   data-id="@item.ItemId" data-price="@item.Price"
+                                                   value="@item.Qty" onkeyup="ChangeQty(this)">
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a href="#" class="icon"><i class="ti-close"></i></a>
+                                </td>
+                                <td>
+                                    <h2 data-id="@item.ItemId" class="td-color totalPrice">$@item.Total</h2>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <table class="table cart-table table-responsive-md">
+                    <tfoot>
+                        <tr>
+                            <td>@ResPage.lblTotalPrice :</td>
+                            <td>
+                                <h2 id="overAllTotal">$@Model.Total</h2>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="row cart-buttons">
+            <div class="col-6"><a href="/Home/Index" class="btn btn-solid">continue shopping</a></div>
+            <div class="col-6"><a href="/Order/OrderSuccess" class="btn btn-solid">check out</a></div>
+        </div>
+    </div>
+    </div>
+</section>
+<!--section end-->
+
+<script>
+
+    function ChangeQty(input) {
+        let id = $(input).data("id");
+        let price = $(input).data("price");
+        let qty = $(input).val();
+        let OverAllTotal = 0;
+
+        // check total
+        $(".totalPrice").each(function (i) {
+            if ($(this).data("id") === id) {
+                $(this).html("$" + (price * qty).toFixed(2));
+            }
+
+            OverAllTotal += parseFloat($(this).text().replace("$", ""));
+        });
+
+        // sum all total
+        $("#overAllTotal").html("$" + OverAllTotal.toFixed(2));
+
+        // ajax request
+    }
+</script>

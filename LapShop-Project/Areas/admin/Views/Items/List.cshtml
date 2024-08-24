@@ -1,0 +1,112 @@
+﻿@model List<VwItem>
+@{
+    ViewData["Title"] = "Show Items";
+}
+@section Styles
+{
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="~/Admin/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+    <!-- End plugin css for this page -->
+}
+
+
+<div class="container-fluid page-body-wrapper">
+    <div class="main-panel">
+        <div class="content-wrapper">
+            <div class="page-header">
+                <h3 class="page-title">ITEMS</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/admin/Home/Index">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">List Items</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">List</h4>
+                    <hr />
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="exampleInputUsername1">@ResAdmin.lblCategoryName</label>
+                                <select asp-items="@(new SelectList(ViewBag.ListCategorie,"CategoryId","CategoryName"))"
+                                        onchange="Search(this)"></select>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <a href="/admin/Items/Edit" class="btn btn-success btn-fw">@ResGeneral.lblNew</a>
+                            }
+
+
+                            <table id="order-listing" class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>@ResAdmin.lblImage</th>
+                                        <th>@ResAdmin.lblItemName</th>
+                                        <th>@ResAdmin.lblCategoryName</th>
+                                        <th>@ResAdmin.lblItemType</th>
+                                        <th>@ResAdmin.lblPrice</th>
+                                        <th>@ResGeneral.lblActions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var cat in Model)
+                                    {
+                                        <tr>
+                                            <td class="col-md-8">
+                                                <img style="width:150px;height:auto; border-radius:inherit" src="~/Uploads/Items/@cat.ImageName" />
+                                            </td>
+                                            <td>@cat.ItemName</td>
+                                            <td>@cat.CategoryName</td>
+                                            <td>@cat.ItemTypeName</td>
+                                            <td>@cat.SalesPrice</td>
+                                            <td class="col-md-4" style="margin:0px;padding:0px;">
+
+                                                <a style="height:max-content"
+                                                   asp-controller="Items" asp-action="Edit" asp-route-itemId="@cat.ItemId"
+                                                   class="btn btn-info btn-fw">@ResGeneral.lblEdit</a>
+
+                                                <a asp-controller="Items" asp-action="Delete" asp-route-itemId="@cat.ItemId"
+                                                   class="btn btn-danger btn-fw">@ResGeneral.lblDelete</a>
+
+                                            </td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- content-wrapper ends -->
+    </div>
+    <!-- main-panel ends -->
+</div>
+
+@section Scripts
+{
+    <!-- plugins:js -->
+    <script src="~/Admin/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="~/Admin/vendors/datatables.net/jquery.dataTables.js"></script>
+    <script src="~/Admin/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- Custom js for this page -->
+    <script src="~/Admin/js/data-table.js"></script>
+    <!-- End custom js for this page -->
+    <script>
+        function Search(dropDonw) {
+            var Id = $(dropDonw).val();
+            window.location.href = "/admin/Items/Search?id=" + Id;
+        }
+    </script>
+}
+
+
