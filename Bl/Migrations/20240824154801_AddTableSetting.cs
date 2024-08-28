@@ -30,6 +30,8 @@ namespace Bl.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TbSettings", x => x.ID);
+
+
                 });
         }
 

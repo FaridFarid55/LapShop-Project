@@ -1,5 +1,8 @@
 ﻿
 
+
+
+
 namespace LapShop_Project.Controllers
 {
     public class UserController : Controller
@@ -33,37 +36,48 @@ namespace LapShop_Project.Controllers
             };
             return View(login);
         }
+
         [HttpPost]
         public async Task<IActionResult> Login(Login loginModel)
         {
-            // initialize
-            user = new ApplicationUser()
+            if (!ModelState.IsValid)
             {
-                Email = loginModel.Email,
-                UserName = loginModel.Email.Substring(0, loginModel.Email.IndexOf('@'))
-            };
+                return View("Login", loginModel);
+            }
 
             try
             {
-                // search on password in database
-                var loginResult = await _signManager.PasswordSignInAsync(user.Email, loginModel.Password, true, true);
+                var myUser = await _userManager.FindByEmailAsync(loginModel.Email);
+                // Attempt to sign in the user
+                var loginResult = await _signManager.PasswordSignInAsync(myUser.NormalizedUserName, loginModel.Password, isPersistent: true, lockoutOnFailure: true);
+
                 if (loginResult.Succeeded)
                 {
+                    // Redirect to the return URL or the home page if none is provided
                     string sReturnUrl = ClsUiHelper.Url(loginModel.ReturnUrl);
                     return Redirect(sReturnUrl);
                 }
+                else if (loginResult.IsLockedOut)
+                {
+                    // Handle locked out user scenario
+                    return View("Lockout");
+                }
                 else
                 {
+                    // Invalid login attempt
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return View("Login", loginModel);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Console.WriteLine("Big Error");
+                // Log the exception (you can use a logging framework like Serilog, NLog, etc.)
+                Console.WriteLine("An error occurred during login: " + ex.Message);
+                ModelState.AddModelError(string.Empty, "An error occurred while processing your request.");
+                return View("Login", loginModel);
             }
-
-            return View();
         }
+
 
         //
         [HttpGet]
@@ -81,49 +95,53 @@ namespace LapShop_Project.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View("Register", userModel);
+                return View(userModel);
             }
 
-            // initialize
-            user = new ApplicationUser()
+            var user = new ApplicationUser
             {
                 FirstName = userModel.FirstName,
                 LastName = userModel.LastName,
                 Email = userModel.Email,
-                UserName = userModel.Email.Substring(0, userModel.Email.IndexOf('@'))
+                UserName = $"{userModel.FirstName}_{userModel.LastName}",
+                // NormalizedUserName = userModel.Email.ToUpper()
             };
 
             try
             {
-                // password
-                var resulte = await _userManager.CreateAsync(user, userModel.Password);
+                // Create the user
+                var result = await _userManager.CreateAsync(user, userModel.Password);
 
-                if (resulte.Succeeded)
+                if (result.Succeeded)
                 {
-                    //  #password#
-                    var loginResult = await _signManager.PasswordSignInAsync(user, userModel.Password, true, true);
+                    // Sign in the user
+                    await _signManager.PasswordSignInAsync(user, userModel.Password, isPersistent: true, lockoutOnFailure: true);
 
-                    // set default access 
-                    var myUser = await _userManager.FindByEmailAsync(user.Email);
-                    await _userManager.AddToRoleAsync(myUser, "Customer");
+                    // Add the default role
+                    await _userManager.AddToRoleAsync(user, "Customer");
 
-                    // check url
-                    string sReturnUrl = ClsUiHelper.Url(userModel.ReturnUrl);
-                    return Redirect(sReturnUrl);
+                    // Check and redirect to the ReturnUrl
+                    string returnUrl = ClsUiHelper.Url(userModel.ReturnUrl);
+                    return Redirect(returnUrl);
                 }
-                else
+
+                // Display errors in case of failure
+                foreach (var error in result.Errors)
                 {
-                    ViewBag.Errors = resulte.Errors;
-                    return View();
+                    ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Console.WriteLine("Big Error");
+                // Log the error for debugging
+                Console.WriteLine($"Error during registration: {ex.Message}");
+                // Display a general error message to the user
+                ModelState.AddModelError(string.Empty, "An error occurred while processing your request. Please try again later.");
             }
 
-            return View();
+            return View(userModel);
         }
+
 
 
         [HttpGet]

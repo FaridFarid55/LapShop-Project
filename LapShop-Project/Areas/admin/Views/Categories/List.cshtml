@@ -28,7 +28,10 @@
                     <hr />
                     <div class="row">
                         <div class="col-12">
-                            <a href="/admin/Categories/Edit" class="btn btn-success btn-fw">New</a>
+                            @if (User.IsInRole("Admin,Owner"))
+                            {
+                                <a href="/admin/Categories/Edit" class="btn btn-success btn-fw">@ResGeneral.lblNew</a>
+                            }
                             <table id="order-listing" class="table table-hover">
                                 <thead>
                                     <tr>

@@ -140,7 +140,7 @@
             @foreach (var item in Model.ListAllItems)
             {
                 <div class="product-box col-xl-2 col-lg-3 col-sm-4 col-6">
-                   <partial name="ItmeBox"  model="@item" />
+                    <partial name="ItmeBox" model="@item" />
                 </div>
             }
         </div>
@@ -171,28 +171,27 @@
         <div class="row multiple-slider">
             <div class="col-xl-4 col-lg-4 col-md-12">
                 <div class="theme-card">
-                    <h5 class="title-border">Under $20 | Free delivery</h5>
+                    <h5 class="title-border">Under $200 | Free delivery</h5>
                     <div class="offer-slider slide-1">
                         <div>
                             @foreach (var item in Model.ListFreeDelivery)
                             {
                                 <div class="media">
-                                    <a href="/Items/ItemsDetails">
-                                        <img class="img-fluid blur-up lazyload"
-                                             src="~/FrontEnd/images/marketplace/6.jpg" alt="">
+                                    <a asp-controller="Items" asp-action="ItemsDetails"
+                                       asp-route-id="@item.ItemId">
+                                        <img src="~/Uploads/Items/@item.ImageName" alt="@item.ItemName">
                                     </a>
                                     <div class="media-body align-self-center">
                                         <div class="rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
+                                            @for (int i = 0; i < 5; i++)
+                                            {
+                                                <i class="fa fa-star"></i>
+                                            }
                                         </div>
                                         <a href="/Items/ItemsDetails">
                                             <h6>@item.ItemName</h6>
                                         </a>
-                                        <h4>$@item.PurchasePrice<del>$@item.SalesPrice</del></h4>
+                                        <h4>$@item.PurchasePrice <del>$@item.SalesPrice</del></h4>
                                     </div>
                                 </div>
                             }
@@ -201,26 +200,27 @@
                             @foreach (var item in Model.ListFreeDelivery)
                             {
                                 <div class="media">
-                                    <a href="product-page(no-sidebar).html">
-                                        <img class="img-fluid blur-up lazyload"
-                                             src="~/FrontEnd/images/marketplace/9.jpg" alt="">
+                                    <a asp-controller="Items" asp-action="ItemsDetails"
+                                       asp-route-id="@item.ItemId">
+                                        <img src="~/Uploads/Items/@item.ImageName" alt="@item.ItemName">
                                     </a>
                                     <div class="media-body align-self-center">
                                         <div class="rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
+                                            @for (int i = 0; i < 5; i++)
+                                            {
+                                                <i class="fa fa-star"></i>
+                                            }
                                         </div>
                                         <a href="/Items/ItemsDetails">
                                             <h6>@item.ItemName</h6>
                                         </a>
-                                        <h4>$@item.PurchasePrice<del>$@item.SalesPrice</del></h4>
+                                        <h4>$@item.PurchasePrice <del>$@item.SalesPrice</del></h4>
                                     </div>
                                 </div>
                             }
                         </div>
+                     
+                     
                     </div>
                 </div>
             </div>

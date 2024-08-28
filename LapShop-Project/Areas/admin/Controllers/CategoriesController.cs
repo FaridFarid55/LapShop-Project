@@ -2,7 +2,7 @@
 
 namespace LapShop_Project.Areas.admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,Owner,Data Entry")]
     [Area("admin")]
     public class CategoriesController : Controller
     {
@@ -19,6 +19,7 @@ namespace LapShop_Project.Areas.admin.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin,Owner")]
         public IActionResult Edit(int? categoryId)
         {
             var Category = new TbCategory();

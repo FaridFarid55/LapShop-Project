@@ -197,17 +197,34 @@
 
                         <li class="nav-item">
                             <a class="nav-link" href="/admin/Categories/List">
-                                <i class="mdi mdi-home menu-icon"></i>
-                                <span class="menu-title">Categories</span>
+                                <i class="mdi mdi-arrange-bring-forward"></i>
+                                <span class="menu-title"> Categories</span>
                             </a>
                         </li>
 
 
                         <li class="nav-item">
                             <a class="nav-link" href="/admin/Items/List">
-                                <i class="mdi mdi-home menu-icon"></i>
+                                <i class="mdi mdi-shopping menu-icon"></i>
                                 <span class="menu-title">Items</span>
+
                             </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="mdi mdi-settings menu-icon"></i>
+                                <span class="menu-title">Apps</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="submenu">
+                                <ul class="submenu-item">
+                                    <li class="nav-item mdi mdi-account-circle"><a class="nav-link" href="pages/apps/kanban-board.html">Profile</a></li>
+                                    @if (User.IsInRole("Owner"))
+                                    {
+                                    <li class="nav-item mdi mdi-web"><a class="nav-link" href="pages/apps/kanban-board.html">Website</a></li>
+                                    }
+                                </ul>
+                            </div>
                         </li>
 
                     </ul>

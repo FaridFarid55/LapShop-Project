@@ -15,7 +15,7 @@
                 <nav aria-label="breadcrumb" class="theme-breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">product</li>
+                        <li class="breadcrumb-item active" aria-current="page">Product</li>
                     </ol>
                 </nav>
             </div>
@@ -164,8 +164,12 @@
                             </div>
                         </div>
                         <div class="product-buttons">
-                            <a href="#" data-toggle="modal" data-target="#addtocart"
-                               class="btn btn-solid">add to cart</a> <a href="#" class="btn btn-solid">buy now</a>
+                            <a asp-controller="Order" asp-action="AddToCart" asp-route-itemId="@Model.Item.ItemId"
+                               class="bt btn-solid">
+                                Add to Cart
+                            </a>
+                            <a href="#" class="btn btn-solid">buy now</a>
+
                         </div>
                     </div>
                 </div>
@@ -324,6 +328,7 @@
                 <h2>Related Items</h2>
             </div>
         </div>
+
         <div class="row search-product">
             @foreach (var item in Model.ListRecommendedItems)
             {
@@ -350,11 +355,6 @@
                                        aria-hidden="true"></i>
                                 </a>
                             </div>
-                            <a asp-controller="Order" asp-action="AddToCart" asp-route-itemId="@item.ItemId"
-                               class="add-button">
-                                Add to
-                                Cart
-                            </a>
                         </div>
                         <div class="product-detail">
                             <div class="rating">
@@ -370,6 +370,7 @@
                 </div>
             }
         </div>
+    </div>
     </div>
 </section>
 <!-- product section end -->

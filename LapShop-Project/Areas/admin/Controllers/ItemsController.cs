@@ -1,7 +1,7 @@
 ﻿
 namespace LapShop_Project.Areas.admin.Controllers
 {
-    [Authorize(Roles = "Admin,Data Entry")]
+    [Authorize(Roles = "Admin,Data Entry,Owner")]
     [Area("admin")]
     public class ItemsController : Controller
     {
@@ -34,7 +34,7 @@ namespace LapShop_Project.Areas.admin.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles = "Admin,Owner")]
         public IActionResult Edit(int? ItemId)
         {
             TbItem item = new TbItem();
@@ -66,7 +66,7 @@ namespace LapShop_Project.Areas.admin.Controllers
             return RedirectToAction(nameof(List));
 
         }
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Owner")]
         public IActionResult Delete(int itemId)
         {
             oClsItems.Delete(itemId);

@@ -25,7 +25,7 @@ namespace LapShop_Project.Controllers
             VmPage.ListAllItems = oClsItem.GetAllItemsData(null).Take(20).ToList();
             VmPage.ListRecommendedProductsItems = oClsItem.GetAllItemsData(null).Skip(40).Take(10).ToList();
             VmPage.ListNewItems = oClsItem.GetAllItemsData(null).Skip(60).Take(10).ToList();
-            VmPage.ListFreeDelivery = oClsItem.GetAllItemsData(null).Skip(100).Take(4).ToList();
+            VmPage.ListFreeDelivery = oClsItem.GetAllItemsData(null).Skip(100).Take(6).ToList();
 
             return View(VmPage);
         }

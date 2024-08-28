@@ -36,7 +36,7 @@
                         </div>
 
                         <div class="col-12">
-                            @if (User.IsInRole("Admin"))
+                            @if (User.IsInRole("Admin,Owner"))
                             {
                                 <a href="/admin/Items/Edit" class="btn btn-success btn-fw">@ResGeneral.lblNew</a>
                             }
@@ -45,6 +45,7 @@
                             <table id="order-listing" class="table table-hover">
                                 <thead>
                                     <tr>
+
                                         <th>@ResAdmin.lblImage</th>
                                         <th>@ResAdmin.lblItemName</th>
                                         <th>@ResAdmin.lblCategoryName</th>
@@ -63,7 +64,7 @@
                                             <td>@cat.ItemName</td>
                                             <td>@cat.CategoryName</td>
                                             <td>@cat.ItemTypeName</td>
-                                            <td>@cat.SalesPrice</td>
+                                            <td>$@cat.SalesPrice</td>
                                             <td class="col-md-4" style="margin:0px;padding:0px;">
 
                                                 <a style="height:max-content"
