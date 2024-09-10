@@ -1,8 +1,4 @@
 ﻿
-
-
-
-
 namespace LapShop_Project.Controllers
 {
     public class UserController : Controller
@@ -57,15 +53,10 @@ namespace LapShop_Project.Controllers
                     string sReturnUrl = ClsUiHelper.Url(loginModel.ReturnUrl);
                     return Redirect(sReturnUrl);
                 }
-                else if (loginResult.IsLockedOut)
-                {
-                    // Handle locked out user scenario
-                    return View("Lockout");
-                }
                 else
                 {
                     // Invalid login attempt
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "Incorrect login attempt");
                     return View("Login", loginModel);
                 }
             }
@@ -73,10 +64,17 @@ namespace LapShop_Project.Controllers
             {
                 // Log the exception (you can use a logging framework like Serilog, NLog, etc.)
                 Console.WriteLine("An error occurred during login: " + ex.Message);
-                ModelState.AddModelError(string.Empty, "An error occurred while processing your request.");
+
+                // Add an error message to the ModelState to display it in the view
+                ModelState.AddModelError(string.Empty, "An error occurred while processing your request. Please try again later");
+
+                // Optionally, you can show a more detailed message for debugging purposes in development environments
+                // ModelState.AddModelError(string.Empty, ex.Message); // Only for development
+
                 return View("Login", loginModel);
             }
         }
+
 
 
         //
@@ -94,9 +92,7 @@ namespace LapShop_Project.Controllers
         public async Task<IActionResult> Register(UserModel userModel)
         {
             if (!ModelState.IsValid)
-            {
                 return View(userModel);
-            }
 
             var user = new ApplicationUser
             {
@@ -104,7 +100,7 @@ namespace LapShop_Project.Controllers
                 LastName = userModel.LastName,
                 Email = userModel.Email,
                 UserName = $"{userModel.FirstName}_{userModel.LastName}",
-                // NormalizedUserName = userModel.Email.ToUpper()
+
             };
 
             try
@@ -141,6 +137,7 @@ namespace LapShop_Project.Controllers
 
             return View(userModel);
         }
+
 
 
 

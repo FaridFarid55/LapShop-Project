@@ -42,6 +42,7 @@ public class ClsCategories : ILapShop<TbCategory>
     {
         try
         {
+            category.CurrentState = 1;
             if (category.CategoryId == 0)
             {
                 category.CreatedBy = "1";
@@ -69,7 +70,8 @@ public class ClsCategories : ILapShop<TbCategory>
         try
         {
             var category = GetById(Id);
-            _Context.TbCategories.Remove(category);
+            category.CurrentState = 0;
+            _Context.Entry(category).State = EntityState.Modified;
             _Context.SaveChanges();
             return true;
         }

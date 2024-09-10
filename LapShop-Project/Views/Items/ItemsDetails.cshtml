@@ -1,6 +1,8 @@
 ﻿@model VmItemDetails
 @{
     ViewData["Title"] = "Details";
+    string startDate = "2024-09-01 01:30";
+    string endDate = "2024-10-01 01:30";
 }
 <!-- breadcrumb start -->
 <div class="breadcrumb-section">
@@ -103,78 +105,93 @@
                         </ul>
                         @* this time reminder *@
                         <div class="product-description border-product">
-                            <h6 class="product-title">Time Reminder</h6>
+                            <h6 class="product-title">
+                                Start Date :
+                                <p id="displayStartDate" style="display:inline;"></p>
+                            </h6>
                             <div class="timer">
-                                <p id="demo">
-                                    <span>
-                                        25 <span class="padding-l">:</span> <span class="timer-cal">Days</span>
-                                    </span><span>
-                                        22 <span class="padding-l">:</span> <span class="timer-cal">Hrs</span>
-                                    </span><span>
-                                        13 <span class="padding-l">:</span> <span class="timer-cal">Min</span>
-                                    </span><span>
-                                        57 <span class="timer-cal">Sec</span>
-                                    </span>
+                                <p id="countdown-start">
+                                    <span>0 <span class="padding-l">:</span><span class="timer-cal">Days</span></span>
+                                    <span>0 <span class="padding-l">:</span><span class="timer-cal">Hrs</span></span>
+                                    <span>0 <span class="padding-l">:</span><span class="timer-cal">Min</span></span>
+                                    <span>0 <span class="timer-cal">Sec</span></span>
                                 </p>
                             </div>
-                            <h6 class="product-title">select size</h6>
-                            <div class="modal fade" id="sizemodal" tabindex="-1" role="dialog"
-                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Sheer Straight Kurta</h5>
-                                            <button type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <img src="~/FrontEnd/images/size-chart.jpg" alt=""
-                                                 class="img-fluid blur-up lazyload">
-                                        </div>
+                            <h6 class="product-title">
+                                End Date:
+                                <p id="displayEndDate" style="display:inline;"></p>
+                            </h6>
+                            <div class="timer">
+                                <p id="countdown-end">
+                                    <span>0 <span class="padding-l">:</span><span class="timer-cal">Days</span></span>
+                                    <span>0 <span class="padding-l">:</span><span class="timer-cal">Hrs</span></span>
+                                    <span>0 <span class="padding-l">:</span><span class="timer-cal">Min</span></span>
+                                    <span>0 <span class="timer-cal">Sec</span></span>
+                                </p>
+                            </div>
+                        </div>
+
+
+
+                        <h6 class="product-title">select size</h6>
+                        <div class="modal fade" id="sizemodal" tabindex="-1" role="dialog"
+                             aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Sheer Straight Kurta</h5>
+                                        <button type="button" class="close" data-dismiss="modal"
+                                                aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <img src="~/FrontEnd/images/size-chart.jpg" alt=""
+                                             class="img-fluid blur-up lazyload">
                                     </div>
                                 </div>
                             </div>
-                            <div class="size-box">
-                                <ul>
-                                    <li class="active"><a href="#">s</a></li>
-                                    <li><a href="#">m</a></li>
-                                    <li><a href="#">l</a></li>
-                                    <li><a href="#">xl</a></li>
-                                </ul>
-                            </div>
-                            <h6 class="product-title">quantity</h6>
-                            <div class="qty-box">
-                                <div class="input-group">
-                                    <span class="input-group-prepend">
-                                        <button type="button"
-                                                class="btn quantity-left-minus" data-type="minus" data-field="">
-                                            <i class="ti-angle-left"></i>
-                                        </button>
-                                    </span>
-                                    <input type="text" name="quantity" class="form-control input-number" value="1">
-                                    <span class="input-group-prepend">
-                                        <button type="button"
-                                                class="btn quantity-right-plus" data-type="plus" data-field="">
-                                            <i class="ti-angle-right"></i>
-                                        </button>
-                                    </span>
-                                </div>
+                        </div>
+                        <div class="size-box">
+                            <ul>
+                                <li class="active"><a href="#">s</a></li>
+                                <li><a href="#">m</a></li>
+                                <li><a href="#">l</a></li>
+                                <li><a href="#">xl</a></li>
+                            </ul>
+                        </div>
+                        <h6 class="product-title">quantity</h6>
+                        <div class="qty-box">
+                            <div class="input-group">
+                                <span class="input-group-prepend">
+                                    <button type="button"
+                                            class="btn quantity-left-minus" data-type="minus" data-field="">
+                                        <i class="ti-angle-left"></i>
+                                    </button>
+                                </span>
+                                <input type="text" name="quantity" class="form-control input-number" value="1">
+                                <span class="input-group-prepend">
+                                    <button type="button"
+                                            class="btn quantity-right-plus" data-type="plus" data-field="">
+                                        <i class="ti-angle-right"></i>
+                                    </button>
+                                </span>
                             </div>
                         </div>
-                        <div class="product-buttons">
-                            <a asp-controller="Order" asp-action="AddToCart" asp-route-itemId="@Model.Item.ItemId"
-                               class="bt btn-solid">
-                                Add to Cart
-                            </a>
-                            <a href="#" class="btn btn-solid">buy now</a>
+                    </div>
+                    <br />
+                    <div class="product-buttons" style="text-align:center;">
+                        <a asp-controller="Order" asp-action="AddToCart" asp-route-itemId="@Model.Item.ItemId"
+                           class="bt btn-solid">
+                            Add to Cart
+                        </a>
+                        <a style="margin-left:20px;" href="#" class="btn btn-solid">buy now</a>
 
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </section>
 <!-- Section ends -->
@@ -377,5 +394,55 @@
 @section Scripts {
     <!-- Zoom js-->
     <script src="~/ForntEnd/js/jquery.elevatezoom.js"></script>
+    <!-- Custom Countdown Script -->
+    <script type="text/javascript">
+        // تعيين تواريخ البدء والنهاية من الكود
+        const startDateTime = new Date('2024-09-07T12:00:00'); // تاريخ ووقت البدء
+        const endDateTime = new Date('2024-10-10T18:00:00'); // تاريخ ووقت النهاية
+
+        // تحديث العرض بالنصوص
+        document.getElementById('displayStartDate').textContent = startDateTime.toLocaleString();
+        document.getElementById('displayEndDate').textContent = endDateTime.toLocaleString();
+
+        // تعيين الوظائف التكرارية للعد التنازلي
+        setInterval(function () {
+            updateCountdown(startDateTime, endDateTime);
+        }, 1000);
+
+        function updateCountdown(startDateTime, endDateTime) {
+            const now = new Date();
+
+            // حساب الفارق في الوقت
+            const timeToStart = startDateTime - now;
+            const timeToEnd = endDateTime - now;
+
+            // تحديث العد التنازلي للبدء
+            if (timeToStart >= 0) {
+                document.getElementById('countdown-start').innerHTML = formatTime(timeToStart);
+            } else {
+                document.getElementById('countdown-start').innerHTML = "Started!";
+            }
+
+            // تحديث العد التنازلي للنهاية
+            if (timeToEnd >= 0) {
+                document.getElementById('countdown-end').innerHTML = formatTime(timeToEnd);
+            } else {
+                document.getElementById('countdown-end').innerHTML = "Ended!";
+            }
+        }
+
+        function formatTime(ms) {
+            const totalSeconds = Math.floor(ms / 1000);
+            const days = Math.floor(totalSeconds / (60 * 60 * 24));
+            const hours = Math.floor((totalSeconds % (60 * 60 * 24)) / (60 * 60));
+            const minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
+            const seconds = totalSeconds % 60;
+
+            return "<span>" + days + " <span class='padding-l'>:</span> <span class='timer-cal'>Days</span> </span>" +
+                "<span>" + hours + " <span class='padding-l'>:</span> <span class='timer-cal'>Hrs</span> </span>" +
+                "<span>" + minutes + " <span class='padding-l'>:</span> <span class='timer-cal'>Min</span> </span>" +
+                "<span>" + seconds + " <span class='timer-cal'>Sec</span></span>";
+        }
+    </script>
 }
 

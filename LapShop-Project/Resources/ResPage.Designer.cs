@@ -70,11 +70,47 @@ namespace LapShop_Project.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copyright.
+        /// </summary>
+        public static string lblCopyright {
+            get {
+                return ResourceManager.GetString("lblCopyright", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create Account.
         /// </summary>
         public static string lblCreateAccount {
             get {
                 return ResourceManager.GetString("lblCreateAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string lblDescription {
+            get {
+                return ResourceManager.GetString("lblDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Facebook Link.
+        /// </summary>
+        public static string lblFacebook_Link {
+            get {
+                return ResourceManager.GetString("lblFacebook_Link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Google Link.
+        /// </summary>
+        public static string lblGoogle_Link {
+            get {
+                return ResourceManager.GetString("lblGoogle_Link", resourceCulture);
             }
         }
         
@@ -88,11 +124,56 @@ namespace LapShop_Project.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Instagram Link.
+        /// </summary>
+        public static string lblInstagram_Link {
+            get {
+                return ResourceManager.GetString("lblInstagram_Link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LinkedIn Link.
+        /// </summary>
+        public static string lblLinkedIn_Link {
+            get {
+                return ResourceManager.GetString("lblLinkedIn_Link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Login.
         /// </summary>
         public static string lblLogin {
             get {
                 return ResourceManager.GetString("lblLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logo Url.
+        /// </summary>
+        public static string lblLogoUrl {
+            get {
+                return ResourceManager.GetString("lblLogoUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mail.
+        /// </summary>
+        public static string lblMail {
+            get {
+                return ResourceManager.GetString("lblMail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phone.
+        /// </summary>
+        public static string lblPhone {
+            get {
+                return ResourceManager.GetString("lblPhone", resourceCulture);
             }
         }
         
@@ -138,6 +219,15 @@ namespace LapShop_Project.Resources {
         public static string lblTotalPrice {
             get {
                 return ResourceManager.GetString("lblTotalPrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Twitter Link.
+        /// </summary>
+        public static string lblTwitter_Link {
+            get {
+                return ResourceManager.GetString("lblTwitter_Link", resourceCulture);
             }
         }
     }

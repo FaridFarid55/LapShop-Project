@@ -10,6 +10,7 @@ namespace Domains
         [Key]
         public int ID { get; set; }
         [MaxLength(400)]
+        [ValidateNever]
         public string? Logo { get; set; }
         [MaxLength(2000)]
         public string? Description { get; set; }

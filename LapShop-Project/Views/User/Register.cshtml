@@ -69,7 +69,11 @@
                                        asp-for="Password">
                                 <span asp-validation-for="Password" class=" text-danger"></span>
                             </div>
+                          
                             <button class="btn btn-solid" type="submit">@ResPage.lblCreateAccount</button>
+                            <br />
+                            <br />
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         </div>
                     </form>
                 </div>

@@ -1,0 +1,113 @@
+﻿@model TbSetting
+@{
+    ViewData["Title"] = "Setting Website";
+}
+<div class="content-wrapper">
+    <div class="page-header">
+        <h3 class="page-title">Settings</h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin/Settings/Website">Settings</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Edit Settings</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="row">
+        <div class="col-md-8 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <hr />
+                    <form class="forms-sample" method="post" enctype="multipart/form-data"
+                          asp-controller="Settings" asp-action="Save" role="form">
+
+                        <input type="hidden" asp-for="Logo" />
+                        <input type="hidden" asp-for="ID" />
+
+
+                        
+                        <div class="form-group">
+                            <label for="exampleInputUsername1"> @ResAdmin.lblImage </label>
+                            <input asp-for="Logo" type="file" 
+                                   id="uploadedImage" name="uploadedImage" class="form-control"
+                                   onchange="previewImage(event)" placeholder="@ResAdmin.lblImage" />
+                            <span class="text-danger" asp-validation-for="Logo"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputUsername1">@ResPage.lblMail</label>
+                            <input asp-for="Mail" type="email" class="form-control" required />
+                            <span class="text-danger" asp-validation-for="Mail"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputUsername1">@ResPage.lblPhone</label>
+                            <input asp-for="Phone" type="text" pattern="^01[0,1,2,5]{1}[0-9]{8}$" class="form-control" required />
+                            <span class="text-danger" asp-validation-for="Phone"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputUsername1">@ResPage.lblCopyright</label>
+                            <input asp-for="Copyright" type="text" class="form-control" required />
+                            <span class="text-danger" asp-validation-for="Copyright"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputUsername1">@ResPage.lblDescription</label>
+                            <input asp-for="Description" type="text" class="form-control" required />
+                            <span class="text-danger" asp-validation-for="Description"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputUsername1">@ResPage.lblFacebook_Link</label>
+                            <input asp-for="Facebook_Link" type="text" class="form-control" required />
+                            <span class="text-danger" asp-validation-for="Facebook_Link"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputUsername1">@ResPage.lblGoogle_Link</label>
+                            <input asp-for="Googol_Link" type="text" class="form-control" required />
+                            <span class="text-danger" asp-validation-for="Googol_Link"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputUsername1">@ResPage.lblTwitter_Link</label>
+                            <input asp-for="Twitter_Link" type="text" class="form-control" required />
+                            <span class="text-danger" asp-validation-for="Twitter_Link"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputUsername1">@ResPage.lblInstagram_Link</label>
+                            <input asp-for="Instagram_Link" type="text" class="form-control" required />
+                            <span class="text-danger" asp-validation-for="Instagram_Link"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputUsername1">@ResPage.lblLinkedIn_Link</label>
+                            <input asp-for="LinkedIn_Link" type="text" class="form-control" required />
+                            <span class="text-danger" asp-validation-for="LinkedIn_Link"></span>
+                        </div>
+                        <button type="submit" formmethod="post" class="btn btn-gradient-primary me-2">@ResGeneral.lblSave</button>
+                        <a class="btn btn-light" href="~/">@ResGeneral.lblClose</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <span id="tbImgName"></span>
+                    <div id="tbImgSrc">
+                        <img id="imagePreview" src="~/FrontEnd/images/Logo/@Model.Logo" style="width:95%; height:300px;" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <script type="text/javascript">
+        function previewImage(event) {
+            var reader = new FileReader();
+            reader.onload = function () {
+                var output = document.getElementById('imagePreview');
+                output.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+}

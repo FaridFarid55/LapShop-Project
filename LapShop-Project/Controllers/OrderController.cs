@@ -18,17 +18,40 @@ namespace LapShop_Project.Controllers
             this.oClsSalesInvoice = oClsSalesInvoice;
         }
 
+        private List<ShoppingCard> GetCartItems()
+        {
+            var cartCookie = Request.Cookies["Cart"];
+
+            if (!string.IsNullOrEmpty(cartCookie))
+                return JsonConvert.DeserializeObject<List<ShoppingCard>>(cartCookie);
+            return new List<ShoppingCard>();
+        }
+        private void SetCartItems(List<ShoppingCard> cartItems)
+        {
+            var cartJson = JsonConvert.SerializeObject(cartItems);
+            CookieOptions options = new CookieOptions
+            {
+                Expires = DateTime.Now.AddDays(7),
+                Path = "/"
+            };
+            Response.Cookies.Append("Cart", cartJson, options);
+        }
+
+
         // Method 
         [HttpGet]
         public IActionResult Cart()
         {
             string sSessionCart = string.Empty;
-
+            ShoppingCard? card = new ShoppingCard();
             // get session && check session null
             if (HttpContext.Request.Cookies["Cart"] != null)
+            {
                 sSessionCart = HttpContext.Request.Cookies["Cart"];
 
-            var card = JsonConvert.DeserializeObject<ShoppingCard>(sSessionCart);
+                card = JsonConvert.DeserializeObject<ShoppingCard>(sSessionCart);
+            }
+
 
             return View(card);
         }
@@ -83,15 +106,30 @@ namespace LapShop_Project.Controllers
         }
 
 
+        public IActionResult RemoveFromCart(decimal productName)
+        {
+            // استرجاع المنتجات المخزنة في سلة التسوق
+            var cartItems = GetCartItems();
+
+            // حذف المنتج الذي يحمل المعرف المحدد
+            var updatedCartItems = cartItems.Where(item => item.Total != productName).ToList();
+
+            // تحديث الكوكي بعد الحذف
+            SetCartItems(updatedCartItems);
+
+            return RedirectToAction("Cart"); // إعادة التوجيه إلى صفحة سلة التسوق
+        }
+
+
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> OrderSuccess()
         {
-            string sesstionCart = string.Empty;
+            string sSessionCart = string.Empty;
 
             if (HttpContext.Request.Cookies["Cart"] != null)
-                sesstionCart = HttpContext.Request.Cookies["Cart"];
-            var cart = JsonConvert.DeserializeObject<ShoppingCard>(sesstionCart);
+                sSessionCart = HttpContext.Request.Cookies["Cart"];
+            var cart = JsonConvert.DeserializeObject<ShoppingCard>(sSessionCart);
             await SaveOrder(cart);
             return View();
         }

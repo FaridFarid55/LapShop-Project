@@ -1,6 +1,4 @@
-﻿
-
-namespace LapShop_Project.Areas.admin.Controllers
+﻿namespace LapShop_Project.Areas.admin.Controllers
 {
     [Authorize(Roles = "Admin,Owner,Data Entry")]
     [Area("admin")]
@@ -30,7 +28,7 @@ namespace LapShop_Project.Areas.admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Save(TbCategory category, List<IFormFile> Files)
+        public async Task<IActionResult> Save(TbCategory category, IFormFile Files)
         {
             if (!ModelState.IsValid)
                 return View("Edit", category);

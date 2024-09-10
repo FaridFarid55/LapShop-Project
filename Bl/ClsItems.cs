@@ -58,8 +58,8 @@ namespace Bl
                 var item = GetById(itemId);
 
                 // check price > 50 and < 50
-                var ListCategory = _Context.VwItems.Where(i => i.SalesPrice < item.SalesPrice + 50 && 
-                i.SalesPrice > item.SalesPrice -50
+                var ListCategory = _Context.VwItems.Where(i => i.SalesPrice < item.SalesPrice + 50 &&
+                i.SalesPrice > item.SalesPrice - 50
                 && i.CurrentState == 1).OrderByDescending(i => i.CreatedDate).ToList();
                 return ListCategory;
             }
@@ -93,8 +93,6 @@ namespace Bl
                 return new VwItem();
             }
         }
-
-
 
         public bool Save(TbItem Items)
         {

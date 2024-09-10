@@ -9,7 +9,7 @@ namespace LapShop_Project.Controllers
         private readonly VmItemDetails VM;
 
         // Constrictor
-        public ItemsController(Iitems oClsItems , IItemImages oClsItemIamges)
+        public ItemsController(Iitems oClsItems, IItemImages oClsItemIamges)
         {
             this.oClsItems = oClsItems;
             VM = new VmItemDetails();
@@ -21,7 +21,7 @@ namespace LapShop_Project.Controllers
         {
             VM.Item = oClsItems.GetItemById(id);
             VM.ListItemImages = oClsItemIamges.GetByItemId(id);
-            VM.ListRecommendedItems = oClsItems.GetRecommendedItems(id);
+            VM.ListRecommendedItems = oClsItems.GetRecommendedItems(id).Take(18).ToList();
             return View(VM);
         }
     }

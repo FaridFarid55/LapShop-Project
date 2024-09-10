@@ -24,6 +24,9 @@
     @RenderSection("Styles", false)
 </head>
 <body>
+    @{
+        var item = ViewData["LayoutViewModel"] as LayoutViewModel;
+    }
     <div class="container-scroller">
         <!-- partial:partials/_horizontal-navbar.html -->
         <div class="horizontal-menu">
@@ -31,7 +34,7 @@
                 <div class="container">
                     <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
                         <a class="navbar-brand brand-logo" href="/admin/Home/Index">
-                            <img src="~/FrontEnd/images/Logo2.png" alt="logo" style="width:auto;height:67px;" />
+                            <img src="~/FrontEnd/images/Logo/@item.LogoUrl" alt="logo" style="width:auto;height:67px;" />
                         </a>
                         <a class="navbar-brand brand-logo-mini" href="index.html">
                             <img src="~/Admin/images/logo-mini.svg" alt="logo" />
@@ -218,10 +221,10 @@
                             </a>
                             <div class="submenu">
                                 <ul class="submenu-item">
-                                    <li class="nav-item mdi mdi-account-circle"><a class="nav-link" href="pages/apps/kanban-board.html">Profile</a></li>
+                                    <li class="nav-item mdi mdi-account-circle"><a class="nav-link" href="/admin/Settings/Profile">Profile</a></li>
                                     @if (User.IsInRole("Owner"))
                                     {
-                                    <li class="nav-item mdi mdi-web"><a class="nav-link" href="pages/apps/kanban-board.html">Website</a></li>
+                                        <li class="nav-item mdi mdi-web"><a class="nav-link" href="/admin/Settings/Website">Website</a></li>
                                     }
                                 </ul>
                             </div>
@@ -241,8 +244,9 @@
                 <!-- partial:partials/_footer.html -->
                 <footer class="footer">
                     <div class="container">
+                        
                         <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021 <a href="https://www.bootstrapdash.com/" target="_blank">BootstrapDash</a>. All rights reserved.</span>
+                            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright : @item.Copyright &copy;.</span>
                             <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>
                         </div>
                     </div>

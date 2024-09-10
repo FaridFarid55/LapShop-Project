@@ -43,8 +43,7 @@
                             <label for="exampleInputUsername1"> @ResAdmin.lblImage </label>
                             <input asp-for="ImageName" type="file" name="Files"
                                    class="form-control" placeholder="@ResAdmin.lblImage"
-                                   onchange="Upload.UploadDefaultImg(event)" accept=".jpg, .jpeg, .png, ,.gif">
-
+                                   id="uploadedImage" onchange="previewImage(event)" />
                         </div>
 
                         <button type="submit" formmethod="post" class="btn btn-gradient-primary me-2">@ResGeneral.lblSave</button>
@@ -59,7 +58,7 @@
                 <div class="card-body">
                     <span id="tbImgName"></span>
                     <div id="tbImgSrc">
-                        <img src="~/Uploads/Categories/@Model.ImageName" style="width:95%; height300px;" />
+                        <img id="imagePreview" src="~/Uploads/Categories/@Model.ImageName" style="width:95%; height300px;" />
                     </div>
                 </div>
             </div>
@@ -69,18 +68,14 @@
 
 @section Scripts
 {
-    <script>
-        var Upload = {
-            UploadDefaultImg: function (e) {
-                const file = e.target.files[0];
-                const reader = new FileReader();
-                reader.onloadend = () => {
-                    CourseMediaImgName = file.name;
-                    CourseMediaImgBase64 = reader.result.slice(reader.result.indexOf('base64,') + 7);
-                    $("#tbImgName").html(file.name)
-                    $("#tbImgSrc").html(`<img class="thumbnail" src = "${reader.result}"  style = "width:95%; height300px;border-radius: 4px;border: 1px solid #d9d9d9;padding: 1px;" />`)
-                };
-            }
+    <script type="text/javascript">
+        function previewImage(event) {
+            var reader = new FileReader();
+            reader.onload = function () {
+                var output = document.getElementById('imagePreview');
+                output.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
         }
     </script>
 }

@@ -120,15 +120,41 @@
   <data name="lblAction" xml:space="preserve">
     <value>Action</value>
   </data>
+  <data name="lblCopyright" xml:space="preserve">
+    <value>Copyright</value>
+  </data>
   <data name="lblCreateAccount" xml:space="preserve">
     <value>Create Account</value>
   </data>
+  <data name="lblDescription" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="lblFacebook_Link" xml:space="preserve">
+    <value>Facebook Link</value>
+  </data>
+  <data name="lblGoogle_Link" xml:space="preserve">
+    <value>Google Link</value>
+  </data>
   <data name="lblImage" xml:space="preserve">
     <value>Image</value>
-    <comment>this`s image item cart</comment>
+  </data>
+  <data name="lblInstagram_Link" xml:space="preserve">
+    <value>Instagram Link</value>
+  </data>
+  <data name="lblLinkedIn_Link" xml:space="preserve">
+    <value>LinkedIn Link</value>
   </data>
   <data name="lblLogin" xml:space="preserve">
     <value>Login</value>
+  </data>
+  <data name="lblLogoUrl" xml:space="preserve">
+    <value>Logo Url</value>
+  </data>
+  <data name="lblMail" xml:space="preserve">
+    <value>Mail</value>
+  </data>
+  <data name="lblPhone" xml:space="preserve">
+    <value>Phone</value>
   </data>
   <data name="lblPrice" xml:space="preserve">
     <value>Price</value>
@@ -144,5 +170,8 @@
   </data>
   <data name="lblTotalPrice" xml:space="preserve">
     <value>Total Price</value>
+  </data>
+  <data name="lblTwitter_Link" xml:space="preserve">
+    <value>Twitter Link</value>
   </data>
 </root>

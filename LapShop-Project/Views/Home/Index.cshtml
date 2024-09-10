@@ -166,6 +166,9 @@
 </section>
 <!-- Parallax banner end -->
 <!-- product section start -->
+@{
+    byte nCount = 0;
+}
 <section class="tools_product bg-title section-b-space">
     <div class="container">
         <div class="row multiple-slider">
@@ -174,35 +177,37 @@
                     <h5 class="title-border">Under $200 | Free delivery</h5>
                     <div class="offer-slider slide-1">
                         <div>
-                            @foreach (var item in Model.ListFreeDelivery)
+
+                            @for (byte i = 0; i < @Model.ListFreeDelivery.Count/2; i++)
                             {
+                                nCount++;
                                 <div class="media">
                                     <a asp-controller="Items" asp-action="ItemsDetails"
-                                       asp-route-id="@item.ItemId">
-                                        <img src="~/Uploads/Items/@item.ImageName" alt="@item.ItemName">
+                                       asp-route-id="@Model.ListFreeDelivery[i].ItemId">
+                                        <img src="~/Uploads/Items/@Model.ListFreeDelivery[i].ImageName" alt="@Model.ListFreeDelivery[i].ItemName">
                                     </a>
                                     <div class="media-body align-self-center">
                                         <div class="rating">
-                                            @for (int i = 0; i < 5; i++)
+                                            @for (int x = 0; x < 5; x++)
                                             {
                                                 <i class="fa fa-star"></i>
                                             }
                                         </div>
                                         <a href="/Items/ItemsDetails">
-                                            <h6>@item.ItemName</h6>
+                                            <h6>@Model.ListFreeDelivery[i].ItemName</h6>
                                         </a>
-                                        <h4>$@item.PurchasePrice <del>$@item.SalesPrice</del></h4>
+                                        <h4>$@Model.ListFreeDelivery[i].PurchasePrice <del>$@Model.ListFreeDelivery[i].SalesPrice</del></h4>
                                     </div>
                                 </div>
                             }
                         </div>
                         <div>
-                            @foreach (var item in Model.ListFreeDelivery)
+                            @for (byte z = nCount; z < @Model.ListFreeDelivery.Count; z++)
                             {
                                 <div class="media">
                                     <a asp-controller="Items" asp-action="ItemsDetails"
-                                       asp-route-id="@item.ItemId">
-                                        <img src="~/Uploads/Items/@item.ImageName" alt="@item.ItemName">
+                                       asp-route-id="@Model.ListFreeDelivery[z].ItemId">
+                                        <img src="~/Uploads/Items/@Model.ListFreeDelivery[z].ImageName" alt="@Model.ListFreeDelivery[z].ItemName">
                                     </a>
                                     <div class="media-body align-self-center">
                                         <div class="rating">
@@ -212,15 +217,15 @@
                                             }
                                         </div>
                                         <a href="/Items/ItemsDetails">
-                                            <h6>@item.ItemName</h6>
+                                            <h6>@Model.ListFreeDelivery[z].ItemName</h6>
                                         </a>
-                                        <h4>$@item.PurchasePrice <del>$@item.SalesPrice</del></h4>
+                                        <h4>$@Model.ListFreeDelivery[z].PurchasePrice <del>$@Model.ListFreeDelivery[z].SalesPrice</del></h4>
                                     </div>
                                 </div>
                             }
                         </div>
-                     
-                     
+
+
                     </div>
                 </div>
             </div>

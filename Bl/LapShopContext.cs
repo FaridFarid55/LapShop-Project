@@ -7,8 +7,7 @@ public partial class LapShopContext : IdentityDbContext<ApplicationUser>
     {
     }
 
-    public LapShopContext(DbContextOptions<LapShopContext> options)
-        : base(options)
+    public LapShopContext(DbContextOptions<LapShopContext> options) : base(options)
     {
     }
     public virtual DbSet<TbSetting> TbSettings { get; set; }

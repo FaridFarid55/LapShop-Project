@@ -21,6 +21,12 @@ namespace LapShop_Project
             builder.Services.AddScoped<IItemImages, ClsItemImages>();
             builder.Services.AddScoped<ISalesInvoice, ClsSalesInvoice>();
             builder.Services.AddScoped<ISalesInvoiceItems, ClsSalesInvoiceItems>();
+            builder.Services.AddScoped<ISettings, ClsSettings>();
+
+            builder.Services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add<LayoutDataFilter>();
+            });
 
             // add session
             builder.Services.AddSession();

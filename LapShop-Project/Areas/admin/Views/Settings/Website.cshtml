@@ -1,23 +1,104 @@
-﻿@model TbSetting
+﻿@model List<TbSetting>
 @{
     ViewData["Title"] = "Setting Website";
 }
+<style>
+    .int {
+        display: flex;
+        align-items: center;
+        margin-bottom: 25px;
+    }
+
+        .int h3 {
+            width: 150px; 
+            margin: 0; 
+        }
+
+        .int h5 {
+            margin: 0; 
+            flex: 1; 
+        }
+</style>
 <div class="content-wrapper">
     <div class="page-header">
         <h3 class="page-title">Settings</h3>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/admin/Categories/List">List Categories</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Edit Categories</li>
+                <li class="breadcrumb-item"><a href="/admin/Home/Index">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Settings</li>
             </ol>
         </nav>
     </div>
     <div class="row">
-        <div class="col-md-8 grid-margin stretch-card">
+        <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Website</h4>
-                    <hr />
+                    @foreach (var item in Model)
+                    {
+                        <a asp-controller="Settings" asp-action="Edit_Website" asp-route-Id="@item.ID"
+                            class="btn btn-success btn-fw">@ResGeneral.lblEdit</a>
+                        <hr />
+                        <!-- Logo -->
+                        <div class="int">
+                            <h3 class="card-title">@ResPage.lblLogoUrl:</h3>
+                            <img src="~/FrontEnd/images/Logo/@item.Logo" style="height:156px;margin-left:100px" />
+                        </div>
+                        <hr />
+                        <!-- Mail -->
+                        <div class="int">
+                            <h3 class="card-title">@ResPage.lblMail :</h3>
+                            <h5>@item.Mail</h5>
+                        </div>
+                        <hr />
+                        <!-- Phone -->
+                        <div class="int">
+                            <h3 class="card-title">@ResPage.lblPhone :</h3>
+                            <h5>@item.Phone</h5>
+                        </div>
+                        <hr />
+                        <!-- Copyright -->
+                        <div class="int">
+                            <h3 class="card-title">@ResPage.lblCopyright :</h3>
+                            <h5>Copyright : @item.Copyright &copy;</h5>
+                        </div>
+                        <hr />
+                        <!-- Description -->
+                        <div class="int">
+                            <h3 class="card-title">@ResPage.lblDescription :</h3>
+                            <h5>@item.Description</h5>
+                        </div>
+                        <hr />
+                        <!-- Facebook_Link -->
+                        <div class="int">
+                            <h3 class="card-title">@ResPage.lblFacebook_Link:</h3>
+                            <h5>@item.Facebook_Link</h5>
+                        </div>
+                        <hr />
+                        <!-- Google_Link -->
+                        <div class="int">
+                            <h3 class="card-title">@ResPage.lblGoogle_Link :</h3>
+                            <h5>@item.Googol_Link</h5>
+                        </div>
+                        <hr />
+                        <!-- Twitter_Link -->
+                        <div class="int">
+                            <h3 class="card-title">@ResPage.lblTwitter_Link :</h3>
+                            <h5>@item.Twitter_Link</h5>
+                        </div>
+                        <hr />
+                        <!-- Instagram_Link -->
+                        <div class="int">
+                            <h3 class="card-title">@ResPage.lblInstagram_Link :</h3>
+                            <h5>@item.Instagram_Link</h5>
+                        </div>
+                        <hr />
+                        <!-- LinkedIn_Link -->
+                        <div class="int">
+                            <h3 class="card-title">@ResPage.lblLinkedIn_Link :</h3>
+                            <h5>@item.LinkedIn_Link</h5>
+                        </div>
+                        <hr />
+                    }
                 </div>
             </div>
         </div>

@@ -70,6 +70,15 @@ namespace LapShop_Project.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string lblClose {
+            get {
+                return ResourceManager.GetString("lblClose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string lblDelete {
