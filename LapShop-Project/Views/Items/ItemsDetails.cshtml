@@ -1,8 +1,9 @@
 ﻿@model VmItemDetails
 @{
     ViewData["Title"] = "Details";
-    string startDate = "2024-09-01 01:30";
-    string endDate = "2024-10-01 01:30";
+    DateTime time = DateTime.Now;
+    string startDate = time.ToString("yyyy-MM-ddTHH:mm:ss"); // صيغة التاريخ المطلوبة
+    string endDate = time.AddMonths(1).ToString("yyyy-MM-ddTHH:mm:ss"); // إضافة شهر
 }
 <!-- breadcrumb start -->
 <div class="breadcrumb-section">
@@ -396,9 +397,9 @@
     <script src="~/ForntEnd/js/jquery.elevatezoom.js"></script>
     <!-- Custom Countdown Script -->
     <script type="text/javascript">
-        // تعيين تواريخ البدء والنهاية من الكود
-        const startDateTime = new Date('2024-09-07T12:00:00'); // تاريخ ووقت البدء
-        const endDateTime = new Date('2024-10-10T18:00:00'); // تاريخ ووقت النهاية
+        // تعيين تواريخ البدء والنهاية من كود C#
+        const startDateTime = new Date('@startDate'); // استيراد التاريخ من كود C#
+        const endDateTime = new Date('@endDate'); // استيراد التاريخ من كود C#
 
         // تحديث العرض بالنصوص
         document.getElementById('displayStartDate').textContent = startDateTime.toLocaleString();
@@ -444,5 +445,6 @@
                 "<span>" + seconds + " <span class='timer-cal'>Sec</span></span>";
         }
     </script>
+
 }
 

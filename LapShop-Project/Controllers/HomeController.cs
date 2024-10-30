@@ -1,6 +1,6 @@
 ﻿namespace LapShop_Project.Controllers
 {
-    public class VwItemsCategory()
+    public class VwItemsCategory
     {
         public string ItemsName { get; set; }
         public string CategoryName { get; set; }

@@ -1,6 +1,5 @@
 // Ignore Spelling: App
 
-
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace LapShop_Project
@@ -54,7 +53,6 @@ namespace LapShop_Project
                 options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
                 options.SlidingExpiration = true;
             });
-
 
 
             var app = builder.Build();
