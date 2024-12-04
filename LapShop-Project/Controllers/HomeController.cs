@@ -14,6 +14,7 @@
         private readonly ISettings oClsSettings;
 
         //Constrictor
+
         public HomeController(Iitems ClsItem, ISettings oClsSettings)
         {
             this.oClsSettings = oClsSettings;
@@ -22,6 +23,7 @@
         }
 
         // Method
+        [MyAuthorization]
         public IActionResult Index()
         {
             // show data

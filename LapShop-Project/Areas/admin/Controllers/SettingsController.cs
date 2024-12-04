@@ -28,7 +28,7 @@ namespace LapShop_Project.Areas.admin.Controllers
         public IActionResult Website()
         {
             var item = oClsSettings.GetById(1);
-            var viewModel = new LayoutViewModel
+            var viewModel = new VmLayout
             {
                 Copyright = item.Copyright,
                 LogoUrl = item.Logo
@@ -47,6 +47,7 @@ namespace LapShop_Project.Areas.admin.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Save(TbSetting item, IFormFile uploadedImage)
         {
             if (!ModelState.IsValid)

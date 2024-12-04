@@ -1,5 +1,122 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model ShoppingCard
 @{
+    ViewData["Title"] = "Order Success";
 }
+
+<style>
+    .order-container {
+        text-align: center;
+        margin: 30px auto;
+        max-width: 700px;
+        font-family: 'Open Sans', sans-serif;
+        background-color: #ffffff;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        border-radius: 12px;
+    }
+
+        .order-container img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+
+    .order-detail {
+        margin-top: 30px;
+        border: 1px solid #e0e0e0;
+        border-collapse: collapse;
+        width: 100%;
+        background-color: #fafafa;
+    }
+
+        .order-detail th,
+        .order-detail td {
+            padding: 15px;
+            text-align: left;
+            font-size: 15px;
+            color: #444;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .order-detail th {
+            background-color: #f7f7f7;
+            font-weight: bold;
+            text-transform: capitalize;
+        }
+
+    .title {
+        color: #333;
+        font-size: 26px;
+        font-weight: bold;
+        text-transform: uppercase;
+        margin-bottom: 15px;
+    }
+
+    .thank-you-text {
+        font-size: 18px;
+        color: #777;
+        margin-bottom: 10px;
+    }
+
+    .total-row {
+        font-weight: bold;
+        background-color: #f7f7f7;
+        text-align: right;
+    }
+
+    .total-cell {
+        padding: 15px;
+        font-size: 18px;
+    }
+
+</style>
+
+<div class="order-container">
+    <img src="~/FrontEnd/images/email-temp/delivery.png" alt="Delivery">
+    <img src="~/FrontEnd/images/email-temp/success.png" alt="">
+    <h2 class="title" style="padding:10px;align-items:center;">Thank You</h2>
+    <p>Payment is successfully processed and your order is on the way.</p>
+    <p>Transaction ID: <b>267676GHERT105467</b></p>
+
+    <table class="order-detail">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Item Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ListItems)
+            {
+                <tr>
+                    <td><img src="~/Uploads/Items/@item.ImageName" alt="Product Image" width="70"></td>
+                    <td>@item.ItemName</td>
+                    <td>@item.Qty</td>
+                    <td><b>$@item.Price</b></td>
+                    <td><b>$@(@item.Price * @item.Qty)</b></td> <!-- Total per item -->
+                </tr>
+            }
+            <!-- Display the total of all products -->
+            <tr class="total-row">
+                <td colspan="4" class="total-cell">Total:</td>
+                <td class="total-cell"><b>$@Model.Total</b></td> <!-- Total of all items -->
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="address-section" style="margin-top: 30px;">
+        <div style="float: left; width: 48%;">
+            <h5>Delivery Address</h5>
+            <p>268 Cambridge Lane, New Albany, IN 47150</p>
+        </div>
+        <div style="float: right; width: 48%;">
+            <h5>Shipping Address</h5>
+            <p>268 Cambridge Lane, New Albany, IN 47150</p>
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+</div>

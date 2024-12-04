@@ -21,11 +21,30 @@
     <!-- End layout styles -->
     <link rel="icon" href="~/FrontEnd/images/Logo2.png" type="image/x-icon">
     <link rel="shortcut icon" href="~/FrontEnd/images/Logo2.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .management-button {
+            background-color: #6ee7b7; /* لون الخلفية للزر */
+            color: #fff; /* لون النص */
+            padding: 10px 20px; /* المسافة الداخلية للزر */
+            border-radius: 8px; /* استدارة الزوايا */
+            font-size: 16px; /* حجم الخط */
+            font-weight: bold; /* نمط الخط */
+            text-align: center; /* توسيط النص */
+            cursor: pointer; /* شكل المؤشر */
+            transition: all 0.3s ease; /* تأثير الانتقال عند التمرير */
+        }
+
+            .management-button:hover {
+                background-color: #4ade80; /* تغيير لون الخلفية عند التمرير */
+            }
+
+    </style>
     @RenderSection("Styles", false)
 </head>
 <body>
     @{
-        var item = ViewData["LayoutViewModel"] as LayoutViewModel;
+        var item = ViewData["LayoutViewModel"] as VmLayout;
     }
     <div class="container-scroller">
         <!-- partial:partials/_horizontal-navbar.html -->
@@ -214,6 +233,42 @@
 
                             </a>
                         </li>
+                        @*/page owner/*@
+                        @if (User.IsInRole("Owner"))
+                        {
+                            <li class="nav-item dropdown d-none d-lg-block">
+                                <a class="nav-link btn create-new-button management-button" id="createbuttonDropdown" data-bs-toggle="dropdown" aria-expanded="false" href="#">+ Management</a>
+                                <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="createbuttonDropdown">
+                                    <div class="dropdown-divider"></div>
+                                    <a href="/admin/Settings/Website" class="dropdown-item preview-item">
+                                        <div class="preview-thumbnail">
+                                            <div class="preview-icon bg-dark rounded-circle">
+                                                <i class="mdi mdi-file-outline text-primary"></i>
+                                            </div>
+                                        </div>
+                                        <div class="preview-item-content">
+                                            <p class="preview-subject ellipsis mb-1">Settings Website</p>
+                                        </div>
+                                    </a>
+
+                                    <div class="dropdown-divider"></div>
+                                    <a href="/admin/Members" class="dropdown-item preview-item">
+                                        <div class="preview-thumbnail">
+                                            <div class="preview-icon bg-dark rounded-circle">
+                                                <i class="mdi mdi-web text-info"></i>
+                                            </div>
+                                        </div>
+                                        <div class="preview-item-content">
+                                            <p class="preview-subject ellipsis mb-1">Settings Roles</p>
+                                        </div>
+                                    </a>
+
+                                    <div class="dropdown-divider"></div>
+                                    <p class="p-3 mb-0 text-center">See all projects</p>
+                                </div>
+                            </li>
+                        }
+
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="mdi mdi-settings menu-icon"></i>
@@ -223,10 +278,6 @@
                             <div class="submenu">
                                 <ul class="submenu-item">
                                     <li class="nav-item mdi mdi-account-circle"><a class="nav-link" href="/admin/Settings/Profile">Profile</a></li>
-                                    @if (User.IsInRole("Owner"))
-                                    {
-                                        <li class="nav-item mdi mdi-web"><a class="nav-link" href="/admin/Settings/Website">Website</a></li>
-                                    }
                                 </ul>
                             </div>
                         </li>
@@ -277,6 +328,7 @@
     <!-- Custom js for this page -->
     <script src="~/Admin/js/dashboard.js"></script>
     <!-- End custom js for this page -->
+    @await Html.PartialAsync("_ValidationScriptsPartial")
     @RenderSection("Scripts", false)
 </body>
 </html>

@@ -4,7 +4,7 @@
 namespace LapShop.Filters
 {
     // Form Farid Farid
-    public class CustomAuthorization : ActionFilterAttribute
+    public class MyAuthorization : ActionFilterAttribute
     {
         public override Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {

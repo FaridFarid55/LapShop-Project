@@ -1,6 +1,4 @@
-﻿
-
-namespace Domains;
+﻿namespace Domains;
 
 public partial class TbItemDiscount
 {

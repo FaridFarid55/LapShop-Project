@@ -1,6 +1,8 @@
 ﻿@model ShoppingCard
 @{
     ViewData["Title"] = "Cart";
+
+    var myCardJson = Json.Serialize(Model);
 }
 <!-- breadcrumb start -->
 <div class="breadcrumb-section">
@@ -25,6 +27,12 @@
 <!-- breadcrumb End -->
 <!--section start-->
 <section class="cart-section section-b-space">
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div style="text-align:center;" class="alert alert-danger">
+            @TempData["ErrorMessage"]
+        </div>
+    }
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
@@ -87,7 +95,9 @@
         </div>
         <div class="row cart-buttons">
             <div class="col-6"><a href="/Home/Index" class="btn btn-solid">continue shopping</a></div>
-            <div class="col-6"><a href="/Order/OrderSuccess" class="btn btn-solid">check out</a></div>
+            <div class="col-6">
+                <a asp-controller="Order" asp-action="OrderSuccess" asp-route-myCard="@myCardJson"
+                id="myButton" class="btn btn-solid">check out</a></div>
         </div>
     </div>
     </div>
@@ -95,7 +105,6 @@
 <!--section end-->
 
 <script>
-
     function ChangeQty(input) {
         let id = $(input).data("id");
         let price = $(input).data("price");
@@ -116,4 +125,15 @@
 
         // ajax request
     }
+
+   
+    // let oShoppingCard = null; 
+
+    // document.getElementById("myButton").addEventListener("click", function (event) {
+    //     if (oShoppingCard === null) {
+    //         event.preventDefault();
+    //         alert("Shopping cart is empty.");
+    //     }
+    // });
+
 </script>

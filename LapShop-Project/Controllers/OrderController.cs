@@ -1,6 +1,4 @@
-﻿
-
-namespace LapShop_Project.Controllers
+﻿namespace LapShop_Project.Controllers
 {
     public class OrderController : Controller
     {
@@ -123,15 +121,33 @@ namespace LapShop_Project.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> OrderSuccess()
+        public async Task<IActionResult> OrderSuccess(string myCard)
         {
+
+            var myCardList = new ShoppingCard();
             string sSessionCart = string.Empty;
 
             if (HttpContext.Request.Cookies["Cart"] != null)
                 sSessionCart = HttpContext.Request.Cookies["Cart"];
             var cart = JsonConvert.DeserializeObject<ShoppingCard>(sSessionCart);
+
+            // check as cart 
+            if (cart == null)
+            {
+                TempData["ErrorMessage"] = "Shopping cart is empty.";
+                return Redirect("/Order/Cart");
+            }
+            // set  ShoppingCard
+            if (!string.IsNullOrEmpty(myCard)) myCardList = JsonConvert.DeserializeObject<ShoppingCard>(myCard);
+            else
+            {
+                TempData["ErrorMessage"] = "Not Found.";
+                return Redirect("/Order/Cart");
+            }
+            // save order
             await SaveOrder(cart);
-            return View();
+
+            return View(myCardList);
         }
 
         public async Task SaveOrder(ShoppingCard oShoppingCard)

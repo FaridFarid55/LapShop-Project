@@ -1,15 +1,13 @@
-﻿
-#nullable disable
+﻿#nullable disable
 
 namespace Bl.Migrations
 {
     /// <inheritdoc />
-    public partial class AddAspNetUser : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-
         }
 
         /// <inheritdoc />

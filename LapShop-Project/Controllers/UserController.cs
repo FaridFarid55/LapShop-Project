@@ -36,10 +36,7 @@ namespace LapShop_Project.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(Login loginModel)
         {
-            if (!ModelState.IsValid)
-            {
-                return View("Login", loginModel);
-            }
+            if (!ModelState.IsValid) return View("Login", loginModel);
 
             try
             {
@@ -49,6 +46,11 @@ namespace LapShop_Project.Controllers
 
                 if (loginResult.Succeeded)
                 {
+                    // Check the user's roles
+                    var roles = await _userManager.GetRolesAsync(myUser);
+
+                    if (roles.Contains("Admin") || roles.Contains("Owner")) return RedirectToAction("Index", "admin");
+
                     // Redirect to the return URL or the home page if none is provided
                     string sReturnUrl = ClsUiHelper.Url(loginModel.ReturnUrl);
                     return Redirect(sReturnUrl);

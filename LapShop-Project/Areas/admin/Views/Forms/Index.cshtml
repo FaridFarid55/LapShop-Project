@@ -1,0 +1,52 @@
+﻿@model IEnumerable<VPermission>
+
+@{
+    int index = 0; // تعريف الفهرس
+}
+
+<form asp-action="SavePermissions" asp-controller="Forms" enctype="multipart/form-data" method="post">
+    <div class="table-responsive mt-4">
+        <table class="table table-hover align-middle">
+            <thead class="bg-dark text-white">
+                <tr>
+                    <th scope="col" class="text-center">Form</th>
+                    <th scope="col" class="text-center">Show</th>
+                    <th scope="col" class="text-center">Add</th>
+                    <th scope="col" class="text-center">Edit</th>
+                    <th scope="col" class="text-center">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var form in Model.GroupBy(f => f.FormName))
+                {
+                    <tr>
+                        <td class="fw-bold text-center">@form.Key</td>
+                        @foreach (var permission in form)
+                        {
+                            <td class="text-center">
+                                <input type="hidden" name="Permissions[@index].FormId" value="@permission.FormId" />
+                                <input type="hidden" name="Permissions[@index].PermissionId" value="@permission.PermissionId" />
+
+                                <!-- حقل مخفي لإرسال القيمة false -->
+                                <input type="hidden" name="Permissions[@index].HasPermission" value="false" />
+
+                                <!-- Checkbox لإرسال القيمة true عند التحديد -->
+                                <input type="checkbox"
+                                       name="Permissions[@index].HasPermission"
+                                       value="true"
+                                       class="form-check-input mx-auto"
+                                @(permission.HasPermission ? "checked" : "") />
+                            </td>
+                            index++;
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="d-flex justify-content-end mt-3">
+        <button style="text-align:center;" type="submit" class="btn btn-primary px-4 py-2">
+            <i class="bi bi-save"></i> Save
+        </button>
+    </div>
+</form>

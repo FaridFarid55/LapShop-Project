@@ -1,6 +1,8 @@
-﻿namespace LapShop_Project.Models
+﻿// Ignore Spelling: Vm
+
+namespace LapShop_Project.Models
 {
-    public class LayoutViewModel
+    public class VmLayout
     {
         public string? LogoUrl { get; set; }
         public string? Copyright { get; set; }

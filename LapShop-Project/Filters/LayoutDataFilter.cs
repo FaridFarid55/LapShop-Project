@@ -26,7 +26,7 @@ public class LayoutDataFilter : IAsyncActionFilter
         var item = oClsSettings.GetById(1);
 
         // set data in layout
-        var viewModel = new LayoutViewModel
+        var viewModel = new VmLayout
         {
             LogoUrl = item.Logo,
             Copyright = item.Copyright,

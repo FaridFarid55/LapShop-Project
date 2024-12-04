@@ -1,5 +1,5 @@
-﻿
-namespace Bl;
+﻿namespace Bl;
+
 
 public partial class LapShopContext : IdentityDbContext<ApplicationUser>
 {
@@ -10,15 +10,18 @@ public partial class LapShopContext : IdentityDbContext<ApplicationUser>
     public LapShopContext(DbContextOptions<LapShopContext> options) : base(options)
     {
     }
-    public virtual DbSet<TbSetting> TbSettings { get; set; }
+
 
     public virtual DbSet<TbBusinessInfo> TbBusinessInfos { get; set; }
+    public virtual DbSet<VPermission> sss { get; set; }
 
     public virtual DbSet<TbCashTransacion> TbCashTransacions { get; set; }
 
     public virtual DbSet<TbCategory> TbCategories { get; set; }
 
     public virtual DbSet<TbCustomer> TbCustomers { get; set; }
+
+    public virtual DbSet<TbForm> TbForms { get; set; }
 
     public virtual DbSet<TbItem> TbItems { get; set; }
 
@@ -30,13 +33,19 @@ public partial class LapShopContext : IdentityDbContext<ApplicationUser>
 
     public virtual DbSet<TbO> TbOs { get; set; }
 
+    public virtual DbSet<TbPermission> TbPermissions { get; set; }
+
     public virtual DbSet<TbPurchaseInvoice> TbPurchaseInvoices { get; set; }
 
     public virtual DbSet<TbPurchaseInvoiceItem> TbPurchaseInvoiceItems { get; set; }
 
+    public virtual DbSet<TbRolePermission> TbRolePermissions { get; set; }
+
     public virtual DbSet<TbSalesInvoice> TbSalesInvoices { get; set; }
 
     public virtual DbSet<TbSalesInvoiceItem> TbSalesInvoiceItems { get; set; }
+
+    public virtual DbSet<TbSetting> TbSettings { get; set; }
 
     public virtual DbSet<TbSlider> TbSliders { get; set; }
 
@@ -46,15 +55,22 @@ public partial class LapShopContext : IdentityDbContext<ApplicationUser>
 
     public virtual DbSet<VwItemCategory> VwItemCategories { get; set; }
 
-    public virtual DbSet<VwItemsLaptop> VwItemsLaptops { get; set; }
-
     public virtual DbSet<VwItemsOutOfInvoice> VwItemsOutOfInvoices { get; set; }
 
     public virtual DbSet<VwSalesInvoice> VwSalesInvoices { get; set; }
 
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+
+        modelBuilder.Entity<AspNetUserLogin>()
+       .HasKey(e => new { e.LoginProvider, e.ProviderKey });
+
+        modelBuilder.Entity<AspNetUserToken>()
+       .HasKey(e => new { e.UserId, e.LoginProvider, e.Name });
+
         modelBuilder.Entity<TbBusinessInfo>(entity =>
         {
             entity.HasKey(e => e.BusinessInfoId);
@@ -79,7 +95,6 @@ public partial class LapShopContext : IdentityDbContext<ApplicationUser>
             entity.Property(e => e.CashValue).HasColumnType("decimal(8, 2)");
         });
 
-
         modelBuilder.Entity<TbCategory>(entity =>
         {
             entity.HasKey(e => e.CategoryId);
@@ -94,6 +109,16 @@ public partial class LapShopContext : IdentityDbContext<ApplicationUser>
             entity.HasKey(e => e.CustomerId);
 
             entity.Property(e => e.CustomerName).HasMaxLength(100);
+        });
+
+        modelBuilder.Entity<TbForm>(entity =>
+        {
+            entity.HasKey(e => e.FormId);
+
+            entity.ToTable("TbForm");
+
+            entity.Property(e => e.ControllerName).HasMaxLength(200);
+            entity.Property(e => e.FormName).HasMaxLength(200);
         });
 
         modelBuilder.Entity<TbItem>(entity =>
@@ -181,6 +206,18 @@ public partial class LapShopContext : IdentityDbContext<ApplicationUser>
             entity.Property(e => e.OsName).HasMaxLength(100);
         });
 
+        modelBuilder.Entity<TbPermission>(entity =>
+        {
+            entity.HasKey(e => e.PermissionId).HasName("PK_TbPermission");
+
+            entity.Property(e => e.ActionName).HasMaxLength(200);
+
+            entity.HasOne(d => d.Form).WithMany(p => p.TbPermissions)
+                .HasForeignKey(d => d.FormId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_TbPermissions_TbForm");
+        });
+
         modelBuilder.Entity<TbPurchaseInvoice>(entity =>
         {
             entity.HasKey(e => e.InvoiceId);
@@ -214,6 +251,25 @@ public partial class LapShopContext : IdentityDbContext<ApplicationUser>
                 .HasConstraintName("FK_TbPurchaseInvoiceItems_TbItems");
         });
 
+        modelBuilder.Entity<TbRolePermission>(entity =>
+        {
+            entity.HasKey(e => e.RolePermissionId);
+
+            entity.ToTable("TbRolePermission");
+
+            entity.Property(e => e.RoleId).HasMaxLength(450);
+
+            entity.HasOne(d => d.Permission).WithMany(p => p.TbRolePermissions)
+                .HasForeignKey(d => d.PermissionId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_TbRolePermission_TbPermissions");
+
+            entity.HasOne(d => d.Role).WithMany(p => p.TbRolePermissions)
+                .HasForeignKey(d => d.RoleId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_TbRolePermission_AspNetRoles");
+        });
+
         modelBuilder.Entity<TbSalesInvoice>(entity =>
         {
             entity.HasKey(e => e.InvoiceId);
@@ -241,6 +297,31 @@ public partial class LapShopContext : IdentityDbContext<ApplicationUser>
                 .HasForeignKey(d => d.ItemId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_TbSalesInvoiceItems_TbItems");
+        });
+
+        modelBuilder.Entity<TbSetting>(entity =>
+        {
+            entity.Property(e => e.ID).HasColumnName("ID");
+            entity.Property(e => e.Copyright).HasMaxLength(400);
+            entity.Property(e => e.Description).HasMaxLength(2000);
+            entity.Property(e => e.Facebook_Link)
+                .HasMaxLength(400)
+                .HasColumnName("Facebook_Link");
+            entity.Property(e => e.Googol_Link)
+                .HasMaxLength(400)
+                .HasColumnName("Googol_Link");
+            entity.Property(e => e.Instagram_Link)
+                .HasMaxLength(400)
+                .HasColumnName("Instagram_Link");
+            entity.Property(e => e.LinkedIn_Link)
+                .HasMaxLength(400)
+                .HasColumnName("LinkedIn_Link");
+            entity.Property(e => e.Logo).HasMaxLength(400);
+            entity.Property(e => e.Mail).HasMaxLength(400);
+            entity.Property(e => e.Phone).HasMaxLength(400);
+            entity.Property(e => e.Twitter_Link)
+                .HasMaxLength(400)
+                .HasColumnName("Twitter_Link");
         });
 
         modelBuilder.Entity<TbSlider>(entity =>
@@ -281,19 +362,6 @@ public partial class LapShopContext : IdentityDbContext<ApplicationUser>
             entity
                 .HasNoKey()
                 .ToView("VwItemCategories");
-
-            entity.Property(e => e.CategoryName).HasMaxLength(100);
-            entity.Property(e => e.ImageName).HasMaxLength(200);
-            entity.Property(e => e.ItemName).HasMaxLength(100);
-            entity.Property(e => e.PurchasePrice).HasColumnType("decimal(8, 2)");
-            entity.Property(e => e.SalesPrice).HasColumnType("decimal(8, 2)");
-        });
-
-        modelBuilder.Entity<VwItemsLaptop>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToView("VwItemsLaptop");
 
             entity.Property(e => e.CategoryName).HasMaxLength(100);
             entity.Property(e => e.ImageName).HasMaxLength(200);
