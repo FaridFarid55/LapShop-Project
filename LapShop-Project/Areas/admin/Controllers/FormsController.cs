@@ -16,47 +16,64 @@
         {
             if (string.IsNullOrEmpty(roleId))
             {
-                return BadRequest("Role ID cannot be null or empty.");
+                ModelState.AddModelError(string.Empty, "Role ID cannot be null or empty.");
+                return View(nameof(Index), Enumerable.Empty<VPermission>());
             }
 
-
-            var role = await _roleManager.FindByNameAsync(roleId);
-            if (role == null)
+            try
             {
-                return NotFound("Role not found.");
+                var role = await _roleManager.FindByIdAsync(roleId);
+                if (role == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Role not found.");
+                    return View(nameof(Index), Enumerable.Empty<VPermission>());
+                }
+
+                var forms = _context.sss
+                    .FromSqlRaw("EXEC GetFormsWithPermissions @roleId = {0}", role.Id)
+                    .ToList();
+
+                return View(nameof(Index), forms);
             }
-
-
-            // جلب الأذونات الخاصة بالدور من خلال استدعاء الإجراء المخزن
-            var forms = _context.sss
-                .FromSqlRaw("EXEC GetFormsWithPermissions @roleId = {0}", role.Id)
-                .ToList();
-
-            return View(nameof(Index), forms);
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, "An error occurred while fetching permissions.");
+                return View(nameof(Index), Enumerable.Empty<VPermission>());
+            }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SavePermissions(IEnumerable<VPermission> permissions)
         {
-
-            // تحديث البيانات في قاعدة البيانات بناءً على القيمة الجديدة
-            foreach (var permission in permissions)
+            if (permissions == null || !permissions.Any())
             {
-                var existingPermission = _context.TbPermissions
-                                                 .FirstOrDefault(p => p.PermissionId == permission.PermissionId);
-                if (existingPermission != null)
-                {
-                    existingPermission.HasPermission = permission.HasPermission;
-                    // تحديث الحقول الأخرى إذا لزم الأمر
-                }
+                ModelState.AddModelError(string.Empty, "No permissions provided to update.");
+                return RedirectToAction(nameof(ManagePermissions));
             }
 
-            _context.SaveChanges();
+            try
+            {
+                foreach (var permission in permissions)
+                {
+                    var existingPermission = await _context.TbPermissions
+                        .FirstOrDefaultAsync(p => p.PermissionId == permission.PermissionId);
 
+                    if (existingPermission != null)
+                    {
+                        existingPermission.HasPermission = permission.HasPermission;
+                        // Update additional fields if necessary
+                    }
+                }
 
-            return Redirect("Websit");
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index"); // Adjust to the appropriate action or view
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, "An error occurred while saving permissions.");
+                return RedirectToAction(nameof(ManagePermissions));
+            }
         }
-
     }
 }

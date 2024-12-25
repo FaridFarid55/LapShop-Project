@@ -7,6 +7,7 @@
         private UserManager<ApplicationUser> _userManager;
         private ISalesInvoice oClsSalesInvoice;
 
+
         // Constrictor
         public OrderController(Iitems ItemService, UserManager<ApplicationUser> userManager, ISalesInvoice oClsSalesInvoice)
         {
@@ -16,14 +17,7 @@
             this.oClsSalesInvoice = oClsSalesInvoice;
         }
 
-        private List<ShoppingCard> GetCartItems()
-        {
-            var cartCookie = Request.Cookies["Cart"];
 
-            if (!string.IsNullOrEmpty(cartCookie))
-                return JsonConvert.DeserializeObject<List<ShoppingCard>>(cartCookie);
-            return new List<ShoppingCard>();
-        }
         private void SetCartItems(List<ShoppingCard> cartItems)
         {
             var cartJson = JsonConvert.SerializeObject(cartItems);
@@ -98,24 +92,13 @@
 
 
         [HttpGet]
-        public IActionResult MyOrders()
+        public async Task<IActionResult> MyOrders()
         {
-            return View();
-        }
+            var user = await _userManager.GetUserAsync(User);
+            var ListInvoice = oClsSalesInvoice.GetById(Guid.Parse(user.Id));
+            ViewBag.Invoice = ListInvoice[0];
 
-
-        public IActionResult RemoveFromCart(decimal productName)
-        {
-            // استرجاع المنتجات المخزنة في سلة التسوق
-            var cartItems = GetCartItems();
-
-            // حذف المنتج الذي يحمل المعرف المحدد
-            var updatedCartItems = cartItems.Where(item => item.Total != productName).ToList();
-
-            // تحديث الكوكي بعد الحذف
-            SetCartItems(updatedCartItems);
-
-            return RedirectToAction("Cart"); // إعادة التوجيه إلى صفحة سلة التسوق
+            return View(nameof(OrderSuccess), ListInvoice);
         }
 
 
@@ -147,7 +130,15 @@
             // save order
             await SaveOrder(cart);
 
-            return View(myCardList);
+            // remove  cookies
+            HttpContext.Response.Cookies.Delete("Cart");
+
+            // add id user 
+            var user = await _userManager.GetUserAsync(User);
+            var ListInvoice = oClsSalesInvoice.GetById(Guid.Parse(user.Id));
+            ViewBag.Invoice = ListInvoice[0];
+
+            return View(ListInvoice);
         }
 
         public async Task SaveOrder(ShoppingCard oShoppingCard)
@@ -185,6 +176,45 @@
             {
                 throw new Exception();
             }
+        }
+
+        // logic
+        private void SetCart(ShoppingCard cart)
+        {
+            var cartCookieValue = JsonConvert.SerializeObject(cart);
+            CookieOptions options = new CookieOptions
+            {
+                Expires = DateTime.Now.AddDays(7), // صلاحية الكوكي
+                HttpOnly = true
+            };
+            HttpContext.Response.Cookies.Append("Cart", cartCookieValue, options);
+        }
+        private ShoppingCard GetCart()
+        {
+            var cartCookie = HttpContext.Request.Cookies["Cart"];
+
+            if (!string.IsNullOrEmpty(cartCookie))
+            {
+                return JsonConvert.DeserializeObject<ShoppingCard>(cartCookie);
+            }
+            return new ShoppingCard(); // إنشاء سلة جديدة إذا كانت فارغة
+        }
+        public IActionResult RemoveFromCart(int productId)
+        {
+            // استرجاع سلة التسوق من الكوكي
+            var cart = GetCart();
+
+            // حذف العنصر الذي يحمل ItemId المطابق
+            cart.ListItems = cart.ListItems.Where(item => item.ItemId != productId).ToList();
+
+            // إعادة حساب المجموع الإجمالي بعد الحذف
+            cart.Total = cart.ListItems.Sum(item => item.Total);
+
+
+            // إعادة تحديث الكوكي بسلة التسوق المحدثة
+            SetCart(cart);
+
+            return RedirectToAction("Cart"); // إعادة التوجيه إلى صفحة السلة
         }
     }
 }

@@ -26,9 +26,9 @@ namespace Domains
         [DataType(DataType.EmailAddress)]
         public string? Mail { get; set; }
 
-        [MaxLength(400)]
         [Required(ErrorMessage = "Please Enter Phone")]
-        [DataType(DataType.PhoneNumber, ErrorMessage = "Invalid Number")]
+        [Range(0, int.MaxValue, ErrorMessage = "Invalid Number")]
+        [RegularExpression(@"^01[0,1,2,5]{1}[0-9]{8}$", ErrorMessage = "Invalid phone number format.")]
         public string? Phone { get; set; }
 
         [MaxLength(400)]

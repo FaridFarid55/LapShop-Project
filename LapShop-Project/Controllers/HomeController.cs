@@ -31,6 +31,8 @@
             VmPage.ListRecommendedProductsItems = oClsItem.GetAllItemsData(null).Skip(40).Take(10).ToList();
             VmPage.ListNewItems = oClsItem.GetAllItemsData(null).Skip(60).Take(10).ToList();
             VmPage.ListFreeDelivery = oClsItem.GetAllItemsData(null).Skip(100).Take(6).ToList();
+            VmPage.ListBaner = oClsItem.GetAllItemsData(null).Skip(1000).Take(4).ToList();
+            VmPage.ListDashBorad = oClsItem.GetAllItemsData(null).Skip(1200).Take(2).ToList();
             return View(VmPage);
         }
     }

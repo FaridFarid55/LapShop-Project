@@ -356,6 +356,17 @@ public partial class LapShopContext : IdentityDbContext<ApplicationUser>
             entity.Property(e => e.PurchasePrice).HasColumnType("decimal(8, 2)");
             entity.Property(e => e.SalesPrice).HasColumnType("decimal(8, 2)");
         });
+        modelBuilder.Entity<VwSalesInvoice>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("VwSalesInvoices");
+
+            entity.Property(e => e.ImageName).HasMaxLength(200);
+            entity.Property(e => e.InvoicePrice).HasColumnType("decimal(8, 2)");
+            entity.Property(e => e.ItemName).HasMaxLength(100);
+        });
+
 
         modelBuilder.Entity<VwItemCategory>(entity =>
         {
@@ -382,15 +393,7 @@ public partial class LapShopContext : IdentityDbContext<ApplicationUser>
             entity.Property(e => e.PurchasePrice).HasColumnType("decimal(8, 2)");
         });
 
-        modelBuilder.Entity<VwSalesInvoice>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToView("VwSalesInvoices");
 
-            entity.Property(e => e.DelivryDate).HasColumnType("datetime");
-            entity.Property(e => e.InvoiceDate).HasColumnType("datetime");
-        });
 
         OnModelCreatingPartial(modelBuilder);
     }

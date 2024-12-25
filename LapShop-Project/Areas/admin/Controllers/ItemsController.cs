@@ -1,83 +1,122 @@
-﻿
-namespace LapShop_Project.Areas.admin.Controllers
+﻿namespace LapShop_Project.Areas.admin.Controllers
 {
     [Authorize(Roles = "Admin,Data Entry,Owner")]
     [Area("admin")]
     public class ItemsController : Controller
     {
-        private List<VwItem> items;
-        private readonly Iitems oClsItems;
-        private readonly ILapShop<TbCategory> oClsCategories;
-        private readonly ILapShop<TbO> oClsOs;
-        private readonly ILapShop<TbItemType> oClsItemTypes;
+        private readonly Iitems _itemService;
+        private readonly ILapShop<TbCategory> _categoryService;
+        private readonly ILapShop<TbO> _osService;
+        private readonly ILapShop<TbItemType> _itemTypeService;
 
-        // Consistent
-        public ItemsController(Iitems Item, ILapShop<TbCategory> Category,
-            ILapShop<TbO> Os, ILapShop<TbItemType> ItemType)
+        // Constructor
+        public ItemsController(Iitems itemService, ILapShop<TbCategory> categoryService,
+            ILapShop<TbO> osService, ILapShop<TbItemType> itemTypeService)
         {
-            oClsItems = Item;
-            oClsCategories = Category;
-            oClsItemTypes = ItemType;
-            oClsOs = Os;
-            items = new List<VwItem>();
+            _itemService = itemService;
+            _categoryService = categoryService;
+            _osService = osService;
+            _itemTypeService = itemTypeService;
         }
 
         [HttpGet]
         public IActionResult List(int? itemId)
         {
-            ViewBag.ListCategorie = oClsCategories.GetAll();
-            if (itemId != null)
-                items = oClsItems.GetAllItemsData(itemId);
-            else
-                items = oClsItems.GetAllItemsData(null);
-            return View(items);
+            try
+            {
+                ViewBag.ListCategorie = _categoryService.GetAll();
+                var items = itemId != null
+                    ? _itemService.GetAllItemsData(itemId)
+                    : _itemService.GetAllItemsData(null);
+                return View(items);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, "An error occurred while loading the items. Please try again.");
+                return View(new List<VwItem>());
+            }
         }
 
         [HttpGet]
         [Authorize(Roles = "Admin,Owner")]
-        public IActionResult Edit(int? ItemId)
+        public IActionResult Edit(int? itemId)
         {
-            TbItem item = new TbItem();
-            ViewBag.listCategories = oClsCategories.GetAll();
-            ViewBag.lstItemTypes = oClsItemTypes.GetAll();
-            ViewBag.lstOs = oClsOs.GetAll();
-            if (ItemId != null)
-                item = oClsItems.GetById(Convert.ToInt32(ItemId));
+            try
+            {
+                ViewBag.listCategories = _categoryService.GetAll();
+                ViewBag.lstItemTypes = _itemTypeService.GetAll();
+                ViewBag.lstOs = _osService.GetAll();
 
-            return View(item);
+                var item = itemId != null ? _itemService.GetById(Convert.ToInt32(itemId)) : new TbItem();
+                return View(item);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, "An error occurred while loading the item. Please try again.");
+                return RedirectToAction(nameof(List));
+            }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Save(TbItem Item, List<IFormFile> Files)
+        public async Task<IActionResult> Save(TbItem item, List<IFormFile> files)
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.listCategories = oClsCategories.GetAll();
-                ViewBag.lstItemTypes = oClsItemTypes.GetAll();
-                ViewBag.lstOs = oClsOs.GetAll();
-                return View(nameof(Edit), Item);
+                PopulateDropdowns();
+                return View(nameof(Edit), item);
             }
 
-
-            Item.ImageName = await ClsUiHelper.UploadImage(Files, "Items");
-            oClsItems.Save(Item);
-
-            return RedirectToAction(nameof(List));
-
+            try
+            {
+                item.ImageName = await ClsUiHelper.UploadImage(files, "Uploads/Items");
+                _itemService.Save(item);
+                return RedirectToAction(nameof(List));
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, "An error occurred while saving the item. Please try again.");
+                PopulateDropdowns();
+                return View(nameof(Edit), item);
+            }
         }
+
         [Authorize(Roles = "Admin,Owner")]
         public IActionResult Delete(int itemId)
         {
-            oClsItems.Delete(itemId);
-
-            return RedirectToAction("list");
+            try
+            {
+                _itemService.Delete(itemId);
+                return RedirectToAction(nameof(List));
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, "An error occurred while deleting the item. Please try again.");
+                return RedirectToAction(nameof(List));
+            }
         }
 
-        public IActionResult Search(int Id)
+        public IActionResult Search(int id)
         {
-            ViewBag.ListCategorie = oClsCategories.GetAll();
-            return View("List", oClsItems.GetAllItemsData(Id));
+            try
+            {
+                ViewBag.ListCategorie = _categoryService.GetAll();
+                var items = _itemService.GetAllItemsData(id);
+                return View(nameof(List), items);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, "An error occurred while searching for items. Please try again.");
+                return RedirectToAction(nameof(List));
+            }
+        }
+
+        // Helper method to populate dropdown lists
+        private void PopulateDropdowns()
+        {
+            ViewBag.listCategories = _categoryService.GetAll();
+            ViewBag.lstItemTypes = _itemTypeService.GetAll();
+            ViewBag.lstOs = _osService.GetAll();
         }
     }
 }

@@ -7,7 +7,8 @@
     <div class="slide-1 home-slider">
         <div>
             <div class="home text-left">
-                <img src="~/FrontEnd/images/electronics/8.jpg" alt="" class="bg-img blur-up lazyload">
+                <img src="~/FrontEnd/images/6B7BPa6NUubiKenaSq6dGC-970-80.jpg" alt="image"
+                     class="bg-img blur-up lazyload">
                 <div class="container-fluid custom-container">
                     <div class="row">
                         <div class="col">
@@ -24,15 +25,16 @@
             </div>
         </div>
         <div>
-            <div class="home text-center">
-                <img src="~/FrontEnd/images/home-banner/12.jpg" alt="" class="bg-img blur-up lazyload">
+            <div class="home text-left">
+                <img src="~/FrontEnd/images/OIP.jpg" alt="image"
+                     class="bg-img blur-up lazyload">
                 <div class="container-fluid custom-container">
                     <div class="row">
                         <div class="col">
                             <div class="slider-contain">
                                 <div>
-                                    <h4>Furnishing deals</h4>
-                                    <h1>Up to 70% off</h1>
+                                    <h4>Headsets for all styles</h4>
+                                    <h1>Starting $19</h1>
                                     <a href="#" class="btn btn-solid">shop now</a>
                                 </div>
                             </div>
@@ -48,69 +50,24 @@
 <section class="banner-padding banner-furniture ratio2_1">
     <div class="container-fluid">
         <div class="row partition4">
-            <div class="col-lg-3 col-md-6">
-                <a href="#">
-                    <div class="collection-banner p-right text-right">
-                        <div class="img-part">
-                            <img src="~/FrontEnd/images/fashion/banner/5.jpg"
-                                 class="img-fluid blur-up lazyload bg-img">
-                        </div>
-                        <div class="contain-banner banner-4">
-                            <div>
-                                <h4>save 30%</h4>
-                                <h2>women</h2>
+            @foreach (var item in Model.ListBaner)
+            {
+                <div class="col-lg-3 col-md-6">
+                    <a href="#">
+                        <div class="collection-banner p-right text-right">
+                            <div class="img-part">
+                                <img src="~/Uploads/Items/@item.ImageName" alt="image">
+                            </div>
+                            <div class="contain-banner banner-4">
+                                <div>
+                                    <h4>save 75%</h4>
+                                    <h2>women</h2>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <a href="#">
-                    <div class="collection-banner p-right text-right">
-                        <div class="img-part">
-                            <img src="~/FrontEnd/images/fashion/banner/10.jpg" class="img-fluid blur-up lazyload bg-img">
-                        </div>
-                        <div class="contain-banner banner-4">
-                            <div>
-                                <h4>save 60%</h4>
-                                <h2>headsets</h2>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <a href="#">
-                    <div class="collection-banner p-right">
-                        <div class="img-part">
-                            <img src="~/FrontEnd/images/fashion/banner/8.jpg"
-                                 class="img-fluid blur-up lazyload bg-img">
-                        </div>
-                        <div class="contain-banner banner-4">
-                            <div>
-                                <h4>save 60%</h4>
-                                <h2>women</h2>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <a href="#">
-                    <div class="collection-banner p-left">
-                        <div class="img-part">
-                            <img src="~/FrontEnd/images/fashion/banner/9.jpg"
-                                 class="img-fluid blur-up lazyload bg-img">
-                        </div>
-                        <div class="contain-banner banner-4">
-                            <div>
-                                <h4>save 60%</h4>
-                                <h2>jewellery</h2>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
+                    </a>
+                </div>
+            }
         </div>
     </div>
 </section>
@@ -178,7 +135,7 @@
                     <div class="offer-slider slide-1">
                         <div>
 
-                            @for (byte i = 0; i < @Model.ListFreeDelivery.Count/2; i++)
+                            @for (byte i = 0; i < @Model.ListFreeDelivery.Count / 2; i++)
                             {
                                 nCount++;
                                 <div class="media">

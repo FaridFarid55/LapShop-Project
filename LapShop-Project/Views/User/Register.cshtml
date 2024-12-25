@@ -29,52 +29,40 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <h3>create account</h3>
+                <h3>Create Account</h3>
                 <div class="theme-card">
-                    <form class="theme-form"
-                          method="post" asp-controller="User" asp-action="Register">
+                    <form class="theme-form" method="post" asp-controller="User" asp-action="Register">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
 
                         <input type="hidden" asp-for="ReturnUrl" />
+
                         <div class="form-row">
-
                             <div class="col-md-6">
-                                <label for="email">First Name</label>
-                                <input type="text" class="form-control" id="fname" placeholder="First Name"
-                                       required="" asp-for="FirstName">
-                                <span asp-validation-for="FirstName" class=" text-danger"></span>
+                                <label for="fname">First Name</label>
+                                <input type="text" class="form-control" id="fname" placeholder="First Name" required asp-for="FirstName">
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
                             </div>
-
-
                             <div class="col-md-6">
-                                <label for="review">Last Name</label>
-                                <input type="text" class="form-control" id="lname" placeholder="Last Name"
-                                       required="" asp-for="LastName">
-                                <span asp-validation-for="LastName" class=" text-danger"></span>
+                                <label for="lname">Last Name</label>
+                                <input type="text" class="form-control" id="lname" placeholder="Last Name" required asp-for="LastName">
+                                <span asp-validation-for="LastName" class="text-danger"></span>
                             </div>
-
                         </div>
-                        <div class="form-row">
 
+                        <div class="form-row">
                             <div class="col-md-6">
                                 <label for="email">Email</label>
-                                <input type="email" class="form-control" id="email" placeholder="Email" required=""
-                                       asp-for="Email">
-                                <span asp-validation-for="Email" class=" text-danger"></span>
+                                <input type="email" class="form-control" id="email" placeholder="Email" required asp-for="Email">
+                                <span asp-validation-for="Email" class="text-danger"></span>
                             </div>
-
                             <div class="col-md-6">
-                                <label for="review">Password</label>
-                                <input type="password" class="form-control" id="review"
-                                       placeholder="Please Enter your password" required=""
-                                       asp-for="Password">
-                                <span asp-validation-for="Password" class=" text-danger"></span>
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="password" placeholder="Please Enter your password" required asp-for="Password">
+                                <span asp-validation-for="Password" class="text-danger"></span>
                             </div>
-                          
-                            <button class="btn btn-solid" type="submit">@ResPage.lblCreateAccount</button>
-                            <br />
-                            <br />
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         </div>
+
+                        <button class="btn btn-solid" type="submit">@ResPage.lblCreateAccount</button>
                     </form>
                 </div>
             </div>
@@ -82,3 +70,7 @@
     </div>
 </section>
 <!--Section ends-->
+@section Scripts
+{
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

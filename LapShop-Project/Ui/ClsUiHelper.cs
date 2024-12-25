@@ -12,7 +12,7 @@ namespace LapShop_Project.Ui
                     string ImageName = Guid.NewGuid().ToString() + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day +
                         DateTime.Now.Hour + +DateTime.Now.Minute + DateTime.Now.Second + DateTime.Now.Microsecond +
                          "Fr" + ".jpg";
-                    var filePaths = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\Uploads/" + folderName, ImageName);
+                    var filePaths = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\" + folderName, ImageName);
                     using (var stream = System.IO.File.Create(filePaths))
                     {
                         await file.CopyToAsync(stream);
@@ -30,7 +30,7 @@ namespace LapShop_Project.Ui
                 string ImageName = Guid.NewGuid().ToString() + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day +
                     DateTime.Now.Hour + +DateTime.Now.Minute + DateTime.Now.Second + DateTime.Now.Microsecond +
                      "Fr" + ".jpg";
-                var filePaths = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\Uploads/" + folderName, ImageName);
+                var filePaths = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\" + folderName, ImageName);
                 using (var stream = System.IO.File.Create(filePaths))
                 {
                     await Files.CopyToAsync(stream);

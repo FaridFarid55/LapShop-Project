@@ -32,6 +32,8 @@
                 <div class="theme-card">
                     <form class="theme-form"
                           method="post" asp-controller="User" asp-action="Login">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
                         <input type="hidden" asp-for="ReturnUrl" />
 
                         <div class="form-group">
@@ -48,7 +50,6 @@
                                    asp-for="Password">
                             <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         <br />
                         <button class="btn btn-solid" type="submit">@ResPage.lblLogin</button>
                     </form>
@@ -69,3 +70,7 @@
     </div>
 </section>
 <!--Section ends-->
+@section Scripts
+{
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

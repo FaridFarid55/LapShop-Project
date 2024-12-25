@@ -70,6 +70,15 @@ namespace LapShop_Project.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Back Home.
+        /// </summary>
+        public static string lblBackHome {
+            get {
+                return ResourceManager.GetString("lblBackHome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Close.
         /// </summary>
         public static string lblClose {

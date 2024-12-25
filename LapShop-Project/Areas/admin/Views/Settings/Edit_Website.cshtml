@@ -19,6 +19,7 @@
                     <hr />
                     <form class="forms-sample" method="post" enctype="multipart/form-data"
                           asp-controller="Settings" asp-action="Save" role="form">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
 
                         <input type="hidden" asp-for="Logo" />
                         <input type="hidden" asp-for="ID" />
@@ -39,7 +40,7 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputUsername1">@ResPage.lblPhone</label>
-                            <input asp-for="Phone" type="text" pattern="^01[0,1,2,5]{1}[0-9]{8}$" class="form-control" required />
+                            <input asp-for="Phone" type="text"  class="form-control" required />
                             <span class="text-danger" asp-validation-for="Phone"></span>
                         </div>
                         <div class="form-group">
@@ -100,6 +101,7 @@
 
 @section Scripts
 {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
     <script type="text/javascript">
         function previewImage(event) {
             var reader = new FileReader();

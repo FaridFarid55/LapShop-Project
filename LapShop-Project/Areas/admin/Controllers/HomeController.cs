@@ -1,23 +1,34 @@
-﻿
-namespace LapShop_Project.Areas.admin.Controllers
+﻿namespace LapShop_Project.Areas.admin.Controllers
 {
     [Area("admin")]
     [Authorize(Roles = "Admin,Data Entry,Owner")]
     public class HomeController : Controller
     {
-        // Filed
-        private readonly ISettings oClsSettings;
+        // Field
+        private readonly ISettings _settingsService;
 
-        //Constrictor
-        public HomeController(ISettings oClsSettings)
+        // Constructor
+        public HomeController(ISettings settingsService)
         {
-            this.oClsSettings = oClsSettings;
+            _settingsService = settingsService;
         }
 
-        // Method
+        // Method: Index
         public async Task<IActionResult> Index()
         {
-            return View();
+            try
+            {
+                // Example of fetching settings asynchronously (if applicable in the future)
+                // var settings = await _settingsService.GetSettingsAsync();
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                // Provide user-friendly feedback
+                ModelState.AddModelError(string.Empty, "An error occurred while loading the page. Please try again later.");
+                return View();
+            }
         }
     }
 }

@@ -1,11 +1,11 @@
-﻿
-namespace Bl
+﻿namespace Bl
 {
     // Form Farid Farid
     public interface ISalesInvoice
     {
         public List<VwSalesInvoice> GetAll();
         public TbSalesInvoice GetById(int id);
+        public List<VwSalesInvoice> GetById(Guid userId);
         public bool Save(TbSalesInvoice Item, List<TbSalesInvoiceItem> lstItems, bool isNew, string name);
         public bool Delete(int Id);
     }
@@ -45,6 +45,21 @@ namespace Bl
                     return new TbSalesInvoice();
                 else
                     return salesInvoice;
+            }
+            catch (Exception)
+            {
+                throw new NotImplementedException();
+            }
+        }
+        public List<VwSalesInvoice> GetById(Guid userId)
+        {
+            try
+            {
+                var ShowInvoice = _Context.VwSalesInvoices.Where(a => a.CustomerId == userId).ToList();
+                if (ShowInvoice == null)
+                    return new List<VwSalesInvoice>();
+                else
+                    return ShowInvoice;
             }
             catch (Exception)
             {

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bl.Migrations
 {
     [DbContext(typeof(LapShopContext))]
-    [Migration("20241111131010_InitialCreate")]
+    [Migration("20241223164911_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -628,8 +628,11 @@ namespace Bl.Migrations
                     b.Property<int>("FormId")
                         .HasColumnType("int");
 
-                    b.Property<bool?>("HasPermission")
+                    b.Property<bool>("HasPermission")
                         .HasColumnType("bit");
+
+                    b.Property<string>("PermissionName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PermissionId")
                         .HasName("PK_TbPermission");
@@ -917,6 +920,37 @@ namespace Bl.Migrations
                     b.ToTable("TbSuppliers");
                 });
 
+            modelBuilder.Entity("Domains.VPermission", b =>
+                {
+                    b.Property<int>("FormId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FormId"));
+
+                    b.Property<string>("ActionName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ControllerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FormName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("HasPermission")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("PermissionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("FormId");
+
+                    b.ToTable("sss");
+                });
+
             modelBuilder.Entity("Domains.VwItem", b =>
                 {
                     b.Property<int>("CategoryId")
@@ -1063,29 +1097,33 @@ namespace Bl.Migrations
 
             modelBuilder.Entity("Domains.VwSalesInvoice", b =>
                 {
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DelivryDate")
-                        .HasColumnType("datetime");
-
-                    b.Property<int?>("DelivryManId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("InvoiceDate")
-                        .HasColumnType("datetime");
+                    b.Property<string>("ImageName")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<int>("InvoiceId")
                         .HasColumnType("int");
 
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<decimal>("InvoicePrice")
+                        .HasColumnType("decimal(8, 2)");
 
-                    b.Property<string>("Notes")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("ItemName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("Qty")
+                        .HasColumnType("int");
+
+                    b.Property<double?>("TotalPrice")
+                        .HasColumnType("float");
 
                     b.ToTable((string)null);
 

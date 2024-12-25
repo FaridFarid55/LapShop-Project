@@ -5,46 +5,79 @@
     public class CategoriesController : Controller
     {
         private readonly ILapShop<TbCategory> oClsCategories;
+
         public CategoriesController(ILapShop<TbCategory> Category)
         {
             oClsCategories = Category;
         }
 
         [HttpGet]
-        public IActionResult list()
+        public IActionResult List()
         {
-            return View(oClsCategories.GetAll());
+            try
+            {
+                return View(oClsCategories.GetAll());
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(string.Empty, "An error occurred while loading the categories.");
+                return View(); // Optionally, use a custom error view.
+            }
         }
 
         [HttpGet]
         [Authorize(Roles = "Admin,Owner")]
         public IActionResult Edit(int? categoryId)
         {
-            var Category = new TbCategory();
-            if (categoryId != null)
-                Category = oClsCategories.GetById(Convert.ToInt32(categoryId));
+            try
+            {
+                var category = new TbCategory();
+                if (categoryId != null)
+                    category = oClsCategories.GetById(Convert.ToInt32(categoryId));
 
-            return View(Category);
+                return View(category);
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(string.Empty, "An error occurred while loading the category.");
+                return View(new TbCategory()); // Returning an empty category object as fallback.
+            }
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Save(TbCategory category, IFormFile Files)
         {
-            if (!ModelState.IsValid)
+            try
+            {
+                if (!ModelState.IsValid)
+                    return View("Edit", category);
+
+                category.ImageName = await ClsUiHelper.UploadImage(Files, "Uploads/Categories");
+                oClsCategories.Save(category);
+
+                return RedirectToAction("List");
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(string.Empty, "An error occurred while saving the category.");
                 return View("Edit", category);
-
-            category.ImageName = await ClsUiHelper.UploadImage(Files, "Categories");
-            oClsCategories.Save(category);
-
-            return RedirectToAction("list");
+            }
         }
 
         [HttpGet]
         public IActionResult Delete(int CategoryId)
         {
-            oClsCategories.Delete(CategoryId);
-
-            return RedirectToAction("list");
+            try
+            {
+                oClsCategories.Delete(CategoryId);
+                return RedirectToAction("List");
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(string.Empty, "An error occurred while deleting the category.");
+                return RedirectToAction("List");
+            }
         }
     }
 }

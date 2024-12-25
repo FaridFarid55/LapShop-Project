@@ -6,13 +6,13 @@
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly LapShopContext _Context;
+        private readonly LapShopContext _context;
 
         public MembersController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, LapShopContext context)
         {
             _userManager = userManager;
             _roleManager = roleManager;
-            _Context = context;
+            _context = context;
         }
 
         public async Task<IActionResult> Index()
@@ -37,12 +37,11 @@
                     userRolesViewModel.Add(thisViewModel);
                 }
 
-
                 return View(userRolesViewModel);
             }
             catch (Exception)
             {
-                ModelState.AddModelError(string.Empty, "An error occurred while loading users.");
+                ModelState.AddModelError(string.Empty, "An error occurred while loading the user list. Please try again.");
                 return View(new List<VmUserRoles>());
             }
         }
@@ -66,14 +65,14 @@
                     UserId = user.Id,
                     Email = user.Email,
                     AvailableRoles = roles.Select(r => r.Name).ToList(),
-                    SelectedRoles = new List<string>() // Ensure the selected roles are empty
+                    SelectedRoles = userRoles.ToList()
                 };
 
                 return View(model);
             }
             catch (Exception)
             {
-                ModelState.AddModelError(string.Empty, "An error occurred while loading user roles.");
+                ModelState.AddModelError(string.Empty, "An error occurred while loading user roles. Please try again.");
                 return View(new VmEditUserRoles());
             }
         }
@@ -93,6 +92,7 @@
                 var currentRoles = await _userManager.GetRolesAsync(user);
                 var selectedRoles = model.SelectedRoles ?? new List<string>(); // Ensure it's not null
 
+                // Remove existing roles
                 var removeResult = await _userManager.RemoveFromRolesAsync(user, currentRoles);
                 if (!removeResult.Succeeded)
                 {
@@ -100,6 +100,7 @@
                     return View(model);
                 }
 
+                // Add new roles
                 var addResult = await _userManager.AddToRolesAsync(user, selectedRoles);
                 if (!addResult.Succeeded)
                 {
@@ -111,7 +112,7 @@
             }
             catch (Exception)
             {
-                ModelState.AddModelError("", "An error occurred while updating user roles.");
+                ModelState.AddModelError("", "An error occurred while updating user roles. Please try again.");
                 return View(model);
             }
         }

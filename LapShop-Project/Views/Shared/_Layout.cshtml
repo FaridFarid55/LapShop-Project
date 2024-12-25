@@ -72,6 +72,10 @@
                                     }
                                     else
                                     {
+                                        @if (User.IsInRole("Owner") || User.IsInRole("Admin"))
+                                        {
+                                             <li><a href="~/admin" data-lng="es">DashBoard</a></li>
+                                        }
                                         <li><a asp-controller="Order" asp-action="MyOrders" data-lng="es">My Orders</a></li>
                                         <li><a asp-controller="User" asp-action="LoginOut" data-lng="es">Logout</a></li>
                                     }
@@ -103,7 +107,7 @@
                                             </div>
                                         </div>
                                         <ul id="sub-menu" class="sm pixelstrap sm-vertical">
-                                            <li><a href="#">My Orders</a></li>
+                                            <li><a asp-controller="Order" asp-action="MyOrders">My Orders</a></li>
                                         </ul>
                                     </nav>
                                 </div>

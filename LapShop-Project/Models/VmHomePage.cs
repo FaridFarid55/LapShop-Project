@@ -9,6 +9,8 @@ namespace LapShop_Project.Models
         {
             ListAllItems = new List<VwItem>();
             ListRecommendedProductsItems = new List<VwItem>();
+            ListBaner = new List<VwItem>();
+            ListDashBorad = new List<VwItem>();
             ListNewItems = new List<VwItem>();
             ListFreeDelivery = new List<VwItem>();
             ListCategories = new List<TbCategory>();
@@ -17,6 +19,8 @@ namespace LapShop_Project.Models
 
         // Property
         public List<VwItem> ListAllItems { get; set; }
+        public List<VwItem> ListDashBorad { get; set; }
+        public List<VwItem> ListBaner { get; set; }
         public List<VwItem> ListRecommendedProductsItems { get; set; }
         public List<VwItem> ListNewItems { get; set; }
         public List<VwItem> ListFreeDelivery { get; set; }

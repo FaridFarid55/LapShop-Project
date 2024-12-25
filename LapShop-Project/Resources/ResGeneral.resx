@@ -135,4 +135,7 @@
   <data name="lblSave" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="lblBackHome" xml:space="preserve">
+    <value>Back Home</value>
+  </data>
 </root>
