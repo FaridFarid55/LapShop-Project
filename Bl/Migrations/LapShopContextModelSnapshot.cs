@@ -1116,8 +1116,8 @@ namespace Bl.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("Qty")
-                        .HasColumnType("int");
+                    b.Property<double>("Qty")
+                        .HasColumnType("float");
 
                     b.Property<double?>("TotalPrice")
                         .HasColumnType("float");
