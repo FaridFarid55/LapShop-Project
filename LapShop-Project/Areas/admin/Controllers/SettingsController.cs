@@ -1,4 +1,6 @@
-﻿namespace LapShop_Project.Areas.admin.Controllers
+﻿using Bl.Classes;
+
+namespace LapShop_Project.Areas.admin.Controllers
 {
     [Area("admin")]
     public class SettingsController : Controller

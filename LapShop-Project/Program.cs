@@ -1,5 +1,6 @@
 // Ignore Spelling: App
 
+using Bl.Classes;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace LapShop_Project

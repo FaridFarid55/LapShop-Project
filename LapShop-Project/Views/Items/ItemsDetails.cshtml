@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Details";
     DateTime time = DateTime.Now;
-    string startDate = time.ToString("yyyy-MM-ddTHH:mm:ss"); 
+    string startDate = time.ToString("yyyy-MM-ddTHH:mm:ss");
     string endDate = time.AddMonths(1).ToString("yyyy-MM-ddTHH:mm:ss");
 }
 <!-- breadcrumb start -->
@@ -48,13 +48,13 @@
                 </div>
                 <div class="col-lg-3 col-sm-10 col-xs-12 order-up">
                     <div class="product-right-slick">
+
                         @foreach (var item in Model.ListItemImages)
                         {
-                            <div>
-                                <img src="~/Uploads/Items/@item.ImageName"
-                                     class="img-fluid blur-up lazyload image_zoom_cls-0">
-                            </div>
+                            <img src="~/Uploads/Items/@item.ImageName"
+                                 class="img-fluid blur-up lazyload image_zoom_cls-0">
                         }
+
                     </div>
                 </div>
                 <div class="col-lg-4">

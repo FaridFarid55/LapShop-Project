@@ -1,4 +1,4 @@
-﻿namespace Bl
+﻿namespace Bl.Classes
 {
     // Form Farid Farid
     public interface ISalesInvoice

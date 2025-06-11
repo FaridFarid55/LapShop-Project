@@ -1,4 +1,6 @@
-﻿namespace ElectronicsFix.Areas.admin.Controllers
+﻿using Bl.Classes;
+
+namespace ElectronicsFix.Areas.admin.Controllers
 {
     [Authorize(Roles = "Owner")]
     [Area("admin")]

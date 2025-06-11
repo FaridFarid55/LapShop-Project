@@ -1,6 +1,6 @@
 ﻿// Ignore Spelling: Cls
 
-namespace Bl
+namespace Bl.Classes
 {
     public interface Iitems
     {

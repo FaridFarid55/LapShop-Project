@@ -1,4 +1,6 @@
-﻿namespace LapShop_Project.Areas.admin.Controllers
+﻿using Bl.Classes;
+
+namespace LapShop_Project.Areas.admin.Controllers
 {
     [Area("admin")]
     public class FormsController : Controller
@@ -29,7 +31,7 @@
                     return View(nameof(Index), Enumerable.Empty<VPermission>());
                 }
 
-                var forms = _context.sss
+                var forms = _context.VPermissions
                     .FromSqlRaw("EXEC GetFormsWithPermissions @roleId = {0}", role.Id)
                     .ToList();
 

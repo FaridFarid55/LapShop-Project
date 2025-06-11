@@ -1,4 +1,5 @@
 ﻿
+using Bl.Classes;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 public class LayoutDataFilter : IAsyncActionFilter

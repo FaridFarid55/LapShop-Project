@@ -1,7 +1,6 @@
-﻿
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace Bl
+namespace Bl.Classes
 {
     public interface IItemImages
     {

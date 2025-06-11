@@ -1,5 +1,7 @@
 ﻿
 
+using Bl.Classes;
+
 namespace LapShop_Project.Controllers
 {
     public class ItemsController : Controller

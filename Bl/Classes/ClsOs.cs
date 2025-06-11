@@ -1,7 +1,6 @@
 ﻿// Ignore Spelling: Cls
 
-
-namespace Bl
+namespace Bl.Classes
 {
     public class ClsOs : ILapShop<TbO>
     {

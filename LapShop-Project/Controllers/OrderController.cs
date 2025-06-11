@@ -1,4 +1,6 @@
-﻿namespace LapShop_Project.Controllers
+﻿using Bl.Classes;
+
+namespace LapShop_Project.Controllers
 {
     public class OrderController : Controller
     {
