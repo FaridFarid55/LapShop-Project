@@ -300,31 +300,6 @@ public partial class LapShopContext : IdentityDbContext<ApplicationUser>
                 .HasConstraintName("FK_TbSalesInvoiceItems_TbItems");
         });
 
-        modelBuilder.Entity<TbSetting>(entity =>
-        {
-            entity.Property(e => e.ID).HasColumnName("ID");
-            entity.Property(e => e.Copyright).HasMaxLength(400);
-            entity.Property(e => e.Description).HasMaxLength(2000);
-            entity.Property(e => e.Facebook_Link)
-                .HasMaxLength(400)
-                .HasColumnName("Facebook_Link");
-            entity.Property(e => e.Googol_Link)
-                .HasMaxLength(400)
-                .HasColumnName("Googol_Link");
-            entity.Property(e => e.Instagram_Link)
-                .HasMaxLength(400)
-                .HasColumnName("Instagram_Link");
-            entity.Property(e => e.LinkedIn_Link)
-                .HasMaxLength(400)
-                .HasColumnName("LinkedIn_Link");
-            entity.Property(e => e.Logo).HasMaxLength(400);
-            entity.Property(e => e.Mail).HasMaxLength(400);
-            entity.Property(e => e.Phone).HasMaxLength(400);
-            entity.Property(e => e.Twitter_Link)
-                .HasMaxLength(400)
-                .HasColumnName("Twitter_Link");
-        });
-
         modelBuilder.Entity<TbSlider>(entity =>
         {
             entity.HasKey(e => e.SliderId);
@@ -393,34 +368,7 @@ public partial class LapShopContext : IdentityDbContext<ApplicationUser>
             entity.Property(e => e.ItemName).HasMaxLength(100);
             entity.Property(e => e.PurchasePrice).HasColumnType("decimal(8, 2)");
         });
-        modelBuilder.Entity<TbSetting>(entity =>
-{
-    entity.HasKey(e => e.ID).HasName("PK__TbSettin__3214EC27B0A5A24A");
 
-    entity.ToTable("TbSetting");
-
-    entity.Property(e => e.ID).HasColumnName("ID");
-    entity.Property(e => e.Copyright).HasMaxLength(400);
-    entity.Property(e => e.Description).HasMaxLength(2000);
-    entity.Property(e => e.Facebook_Link)
-        .HasMaxLength(400)
-        .HasColumnName("Facebook_Link");
-    entity.Property(e => e.Googol_Link)
-        .HasMaxLength(400)
-        .HasColumnName("Googol_Link");
-    entity.Property(e => e.Instagram_Link)
-        .HasMaxLength(400)
-        .HasColumnName("Instagram_Link");
-    entity.Property(e => e.LinkedIn_Link)
-        .HasMaxLength(400)
-        .HasColumnName("LinkedIn_Link");
-    entity.Property(e => e.Logo).HasMaxLength(400);
-    entity.Property(e => e.Mail).HasMaxLength(400);
-    entity.Property(e => e.Phone).HasMaxLength(50);
-    entity.Property(e => e.Twitter_Link)
-        .HasMaxLength(400)
-        .HasColumnName("Twitter_Link");
-});
 
         OnModelCreatingPartial(modelBuilder);
     }

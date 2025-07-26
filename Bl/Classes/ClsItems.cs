@@ -28,25 +28,33 @@ namespace Bl.Classes
             try
             {
                 var ListItems = _Context.TbItems.ToList();
+                if (ListItems == null)
+                    throw new ArgumentNullException("Not Date");
                 return ListItems;
             }
-            catch
+            catch (Exception ex)
             {
-                return new List<TbItem>();
+                throw;
             }
         }
 
-        public List<VwItem> GetAllItemsData(int? CategoryId)
+        public List<VwItem> GetAllItemsData(int? categoryId)
         {
+            if(categoryId==0) throw new KeyNotFoundException($"Item with ID {categoryId} not found.");
             try
             {
-                var ListCategory = _Context.VwItems.Where(i => (i.CategoryId == CategoryId || CategoryId == null || CategoryId == 0)
+                var ListCategory = _Context.VwItems.Where(i => (categoryId == null || categoryId == 0 || i.CategoryId == categoryId)
                 && i.CurrentState == 1).OrderByDescending(i => i.CreatedDate).ToList();
+
+
+
+                if (ListCategory == null || ListCategory.Count == 0) throw new KeyNotFoundException($"Item with ID {categoryId} not found.");
+
                 return ListCategory;
             }
-            catch
+            catch (Exception ex)
             {
-                return new List<VwItem>();
+                throw;
             }
         }
 
@@ -63,9 +71,9 @@ namespace Bl.Classes
                 && i.CurrentState == 1).OrderByDescending(i => i.CreatedDate).ToList();
                 return ListCategory;
             }
-            catch
+            catch (Exception ex)
             {
-                return new List<VwItem>();
+                throw;
             }
         }
 
@@ -74,11 +82,12 @@ namespace Bl.Classes
             try
             {
                 var item = _Context.TbItems.FirstOrDefault(a => a.ItemId == id && a.CurrentState == 1);
+                if (item == null) throw new KeyNotFoundException($"Item with ID {id} not found.");
                 return item;
             }
-            catch
+            catch (Exception ex)
             {
-                return new TbItem();
+                throw;
             }
         }
         public VwItem GetItemById(int id)
@@ -115,9 +124,9 @@ namespace Bl.Classes
                 _Context.SaveChanges();
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
-                return false;
+                throw;
             }
         }
 
@@ -131,9 +140,9 @@ namespace Bl.Classes
                 _Context.SaveChanges();
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
-                return false;
+                throw;
             }
         }
     }

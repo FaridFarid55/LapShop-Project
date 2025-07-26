@@ -26,5 +26,11 @@ namespace LapShop_Project.Controllers
             VM.ListRecommendedItems = oClsItems.GetRecommendedItems(id).Take(18).ToList();
             return View(VM);
         }
+        public IActionResult ItemList()
+        {
+            return View();
+        }
+
+
     }
 }

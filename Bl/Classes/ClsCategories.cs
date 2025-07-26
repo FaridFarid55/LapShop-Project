@@ -16,11 +16,13 @@ public class ClsCategories : ILapShop<TbCategory>
         try
         {
             var ListCategories = _Context.TbCategories.Where(c => c.CurrentState == 1).ToList();
+            if (ListCategories == null)
+                throw new ArgumentNullException("Not Categories");
             return ListCategories;
         }
-        catch
+        catch (Exception ex)
         {
-            return new List<TbCategory>();
+            throw;
         }
     }
 
@@ -29,11 +31,12 @@ public class ClsCategories : ILapShop<TbCategory>
         try
         {
             var Category = _Context.TbCategories.FirstOrDefault(c => c.CategoryId == Id && c.CurrentState == 1);
+            if (Category == null) throw new KeyNotFoundException($"Item with ID {Id} not found.");
             return Category;
         }
-        catch
+        catch (Exception ex)
         {
-            return new TbCategory();
+            throw;
         }
     }
 
@@ -58,9 +61,9 @@ public class ClsCategories : ILapShop<TbCategory>
             _Context.SaveChanges();
             return true;
         }
-        catch
+        catch (Exception ex)
         {
-            return false;
+            throw;
         }
     }
 
@@ -74,9 +77,9 @@ public class ClsCategories : ILapShop<TbCategory>
             _Context.SaveChanges();
             return true;
         }
-        catch
+        catch (Exception ex)
         {
-            return false;
+            throw;
         }
     }
 

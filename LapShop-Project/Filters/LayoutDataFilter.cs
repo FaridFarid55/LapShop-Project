@@ -24,7 +24,13 @@ public class LayoutDataFilter : IAsyncActionFilter
         var Logo = await _Context.TbSettings
           .Select(n => n.Logo).FirstOrDefaultAsync();
 
-        var item = oClsSettings.GetById(1);
+
+        var GetAllSetting = oClsSettings.GetAll();
+        int Id = 0;
+
+        if (GetAllSetting.Count == 1) for (byte i = 0; i < GetAllSetting.Count; i++) Id = GetAllSetting[i].ID;
+
+        var item = oClsSettings.GetById(Id);
 
         // set data in layout
         var viewModel = new VmLayout

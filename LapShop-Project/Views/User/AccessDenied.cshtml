@@ -1,6 +1,31 @@
 ﻿@{
-    ViewData["Title"] = "AccessDenied";
+    ViewData["Title"] = "Access Denied";
 }
 
-<h1 style="color:red;text-align:center;">You Are Not Authorized</h1>
+<div style="max-width:600px; margin:100px auto; text-align:center; font-family:Segoe UI, sans-serif;">
+    <h1 style="color:#d9534f;">Access Denied</h1>
 
+    <p style="font-size:18px; margin-top:20px;">
+        We apologize, but you do not have the necessary permissions to access this section of the system.
+    </p>
+
+    <p style="font-size:16px; color:gray; margin-top:15px;">
+        For security reasons, you will be redirected to the homepage in <span id="countdown">10</span> seconds.
+    </p>
+
+    <a href="~/" class="btn btn-primary" style="margin-top:30px;">Return to Homepage</a>
+</div>
+
+<script>
+    let seconds = 10;
+    const countdown = document.getElementById("countdown");
+
+    const interval = setInterval(() => {
+        seconds--;
+        countdown.textContent = seconds;
+        if (seconds <= 0) {
+            clearInterval(interval);
+            window.location.href = "/";
+        }
+    }, 1000);
+</script>
