@@ -1,5 +1,5 @@
 ﻿
-namespace LapShop_Project.apiControllers
+namespace Api
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -7,10 +7,8 @@ namespace LapShop_Project.apiControllers
     {
         // GET: api/<ValuesController>
         [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        public IEnumerable<string> Get() =>  new string[] { "value1", "value2" };
+
 
         // GET api/<ValuesController>/5
         [HttpGet("{id}")]

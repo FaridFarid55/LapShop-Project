@@ -1,6 +1,6 @@
-﻿namespace LapShop_Project.Models
+﻿namespace Api
 {
-    public partial class ApiResponse
+    public  class ApiResponse
     {
         public object Data { get; set; }
         public string Message { get; set; }

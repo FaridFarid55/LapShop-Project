@@ -1,4 +1,4 @@
-// Ignore Spelling: App
+﻿// Ignore Spelling: App
 
 using Bl.Classes;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -23,10 +23,15 @@ namespace LapShop_Project
             builder.Services.AddScoped<ISalesInvoiceItems, ClsSalesInvoiceItems>();
             builder.Services.AddScoped<ISettings, ClsSettings>();
 
-            builder.Services.AddControllersWithViews(options =>
-            {
-                options.Filters.Add<LayoutDataFilter>();
-            });
+            builder.Services
+                     .AddControllersWithViews(options =>
+                     {
+                         options.Filters.Add<LayoutDataFilter>();
+                     })
+
+                     .AddApplicationPart(typeof(Api.CategoriesController).Assembly)
+                     .AddControllersAsServices();
+
 
             // add session
             builder.Services.AddSession();

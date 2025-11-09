@@ -1,7 +1,7 @@
 ﻿
-using Bl.Classes;
 
-namespace LapShop_Project.apiControllers
+
+namespace Api.apiControllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -9,10 +9,7 @@ namespace LapShop_Project.apiControllers
     {
         private readonly Iitems oItem;
 
-        public ItemsController(Iitems oItem)
-        {
-            this.oItem = oItem;
-        }
+        public ItemsController(Iitems oItem) => this.oItem = oItem;
 
 
         // GET: api/<ItemsController>
@@ -131,7 +128,7 @@ namespace LapShop_Project.apiControllers
                 oApiResponse.Errors = new List<string> { ex.Message };
                 return oApiResponse;
             }
-         
+
 
         }
     }

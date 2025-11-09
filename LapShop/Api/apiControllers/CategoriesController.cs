@@ -1,5 +1,6 @@
 ﻿
-namespace LapShop_Project.apiControllers
+
+namespace Api
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -7,10 +8,9 @@ namespace LapShop_Project.apiControllers
     {
         private readonly ILapShop<TbCategory> oClsCategories;
 
-        public CategoriesController(ILapShop<TbCategory> Category)
-        {
-            oClsCategories = Category;
-        }
+        public CategoriesController(ILapShop<TbCategory> Category) => oClsCategories = Category;
+
+
 
         // GET: api/<ItemsController>
         [HttpGet]
