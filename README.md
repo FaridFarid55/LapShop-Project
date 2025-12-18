@@ -72,10 +72,6 @@ This project is suitable for:
 2. Order Processing
 3. Order Delivered
 
-### 💬 Customer Support
-
-* Online meeting booking for technical support
-* Integrated chatbot for common questions
 
 ### 📱 Responsive Design
 
