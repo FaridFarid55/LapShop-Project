@@ -163,7 +163,7 @@ Unauthorized use, reproduction, or distribution of this project may result in le
 
 For questions, collaboration, or permission requests:
 
-* **LinkedIn:** [https://www.linkedin.com/](https://www.linkedin.com/)
+* **LinkedIn:** [FaridFarid-Linkedin](https://www.linkedin.com/in/farid-farid-5a2478276)
 * Or open an issue in the repository
 
 ---
