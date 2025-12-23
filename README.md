@@ -124,8 +124,23 @@ This project is suitable for:
 * Shopping Cart
 * Admin Dashboard
 
-> *(Screenshots can be added here for better presentation)*
-![Screenshot Description](README.jpg)
+
+![Screenshot Description](/LapShop/LapShop-Project/wwwroot/FrontEnd/images/Screenshots/1.png)
+![Screenshot Description](/LapShop/LapShop-Project/wwwroot/FrontEnd/images/Screenshots/2.png)
+![Screenshot Description](/LapShop/LapShop-Project/wwwroot/FrontEnd/images/Screenshots/3.png)
+![Screenshot Description](/LapShop/LapShop-Project/wwwroot/FrontEnd/images/Screenshots/4.png)
+![Screenshot Description](/LapShop/LapShop-Project/wwwroot/FrontEnd/images/Screenshots/5.png)
+![Screenshot Description](/LapShop/LapShop-Project/wwwroot/FrontEnd/images/Screenshots/6.png)
+![Screenshot Description](/LapShop/LapShop-Project/wwwroot/FrontEnd/images/Screenshots/7.png)
+![Screenshot Description](/LapShop/LapShop-Project/wwwroot/FrontEnd/images/Screenshots/8.png)
+![Screenshot Description](/LapShop/LapShop-Project/wwwroot/FrontEnd/images/Screenshots/9.png)
+![Screenshot Description](/LapShop/LapShop-Project/wwwroot/FrontEnd/images/Screenshots/10.png)
+![Screenshot Description](/LapShop/LapShop-Project/wwwroot/FrontEnd/images/Screenshots/11.png)
+![Screenshot Description](/LapShop/LapShop-Project/wwwroot/FrontEnd/images/Screenshots/12.png)
+![Screenshot Description](/LapShop/LapShop-Project/wwwroot/FrontEnd/images/Screenshots/13.png)
+![Screenshot Description](/LapShop/LapShop-Project/wwwroot/FrontEnd/images/Screenshots/14.png)
+![Screenshot Description](/LapShop/LapShop-Project/wwwroot/FrontEnd/images/Screenshots/15.png)
+![Screenshot Description](/LapShop/LapShop-Project/wwwroot/FrontEnd/images/Screenshots/16.png)
 ---
 
 ## 🔒 Security Considerations
